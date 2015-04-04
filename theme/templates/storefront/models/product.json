@@ -1,0 +1,4 @@
+{
+  "url": "http://catalog-facade.apphb.com/petlove/products/:slug",
+  "cacheDuration": 60
+}

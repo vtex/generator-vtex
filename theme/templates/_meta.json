@@ -1,0 +1,9 @@
+{
+  "name": "<%= name %>-theme",
+  "version": "0.1.0",
+  "owner": "<%= owner %>",
+  "dependencies": {},
+  "schemas": {
+    "storefront": 1
+  }
+}

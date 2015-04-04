@@ -1,0 +1,16 @@
+{% for sku in product.items %}
+<div class="row">
+  <div class="col-md-2">
+    <img src="{% widget 'vteximg' id:'_' path:sku.images[0].path width:'65' height:'65' %}" alt="" height="65px" width="65px" class="thumbnail">
+  </div>
+  <div class="col-md-7">
+    <b>{{ sku.name }}</b>
+    {% if sku.sellers[0].offer.availableQuantity > 0 %}
+      <p>
+      {% if sku.sellers[0].offer.listPrice != sku.sellers[0].offer.price %}<s>De: {{ sku.sellers[0].offer.listPrice | price }}</s>&nbsp;{% endif %}
+      Por: {{ sku.sellers[0].offer.price | price }} à vista
+      </p>
+    {% endif %}
+  </div>
+</div>
+{% endfor %}

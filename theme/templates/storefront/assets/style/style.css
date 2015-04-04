@@ -1,0 +1,301 @@
+.ds-theme .ds-main.page-home {
+	max-width: 1500px;
+}
+
+@media (min-width: 1200px) {
+	.ds-theme .container {
+		width: auto;
+	}
+}
+
+.ds-title {
+	margin: 5px auto;
+}
+
+.ds-navbar-home {
+	position: relative;
+	float: left;
+	padding: 9px 10px;
+	margin-right: 15px;
+	background-color: transparent;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	width: 80%;
+}
+
+.ds-one-line {
+	white-space: nowrap;
+}
+
+.ds-strong {
+	display: block;
+}
+
+.ds-navbar-top {
+	margin-top: 22px;
+	font-size: 13px;
+}
+
+.ds-navbar {
+	margin-bottom: 0;
+}
+
+.ds-menu-item {
+	height: 60px;
+}
+
+@media (min-width: 768px) {
+	.navbar-nav>li>a {
+		padding-top: 8px;
+		padding-bottom: 8px;
+	}	
+}
+
+.ds-menu-search {
+	padding: 13px;
+}
+
+.ds-menu-submenu {
+	padding: 0;
+}
+
+.ds-menu-cart i {
+	font-size: 20px;
+}
+
+.banner-top div {
+	text-align: center;
+	max-height: 300px;
+	overflow: hidden;
+	padding: 0;
+}
+
+.ds-sidebar {
+	text-align: center;
+}
+
+.ds-sidebar::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0,0,0,0.025);
+	z-index: 2;
+	pointer-events: none;
+}
+
+.ds-muted {
+	font-size: 0.9em;
+	color: #666;
+}
+
+.ds-main {
+	margin-top: 10px;
+}
+
+.ds-item-row {
+	margin-bottom: 20px;
+}
+
+.ds-item-image-container {
+	margin-bottom: 10px;
+}
+
+.ds-item-info {
+	margin-bottom: 10px;
+}
+
+.ds-brand {
+	display: block;
+	font-size: 0.9em;
+	color: #666;
+}
+
+.ds-item-link {
+	color: #004B91;
+	font-weight: bold;
+}
+
+.ds-item-link:hover {
+	color: #c60;
+}
+
+.ds-item-link:visited {
+	color: #963;
+}
+
+.ds-item-price-container a {
+	text-decoration: none;
+}
+
+.ds-item-price {
+	font-weight: bold;
+	color: #900;
+}
+
+.ds-item-list-price {
+	text-decoration: line-through;
+	font-size: 0.9em;
+	font-weight: normal;
+	color: #666;
+}
+
+.ds-breadcrumb-container {
+	background: #FAFAFA;
+	margin-bottom: 5px;
+	font-size: 0.9em;
+}
+
+.ds-breadcrumb {
+	margin: 10px 0;
+}
+
+.ds-category-name {
+	margin-top: 0;
+}
+
+/* Product page */
+.ds-product-info {
+	border-bottom: 1px solid #eee;
+	margin-bottom: 15px;
+}
+
+.ds-product-title {
+	padding-bottom: 5px;
+	margin-bottom: 15px;
+	border-bottom: 1px solid #eee;
+}
+
+.ds-product-name {
+	font-size: 22px;
+	line-height: 1.3 !important;
+	text-rendering: optimizeLegibility;
+	margin: 0;
+}
+
+.ds-product-price-table {
+	font-size: 0.9em;
+	margin-bottom: 10px;
+}
+
+.ds-product-price-table td {
+	padding-bottom: 3px;
+}
+
+.ds-product-price-table-label {
+	color: #666;
+	padding-right: 5px;
+	text-align: right;
+}
+
+.ds-product-list-price-row .ds-product-price-table-value {
+	text-decoration: line-through;
+}
+
+.ds-product-price-row .ds-product-price-table-value {
+	color: #900;
+	font-size: 1.3em;
+	text-rendering: optimizeLegibility;
+}
+
+.ds-product-savings-row .ds-product-price-table-value {
+	color: #900;
+}
+
+.ds-product-stock {
+	font-size: 1.2em;
+	color: #008a00;
+}
+
+.ds-product-seller {
+	font-size: 0.9em;
+}
+
+.ds-product-excerpt {
+	margin: 20px 0;
+}
+
+.ds-product-excerpt-title {
+	font-size: 14px;
+	font-weight: bold;
+	color: #888;
+	margin: 0 0 5px;
+}
+
+.ds-product-read-description {
+	display: block;
+}
+
+/* Product - Social Share */
+.ds-product-social-share {
+	text-align: center;
+}
+
+.ds-product-social-share i {
+	font-size: 1.3em;
+}
+
+.ds-product-social-share-email {
+	font-size: 0.9em;
+}
+
+.ds-product-social-share-email-icon {
+	color: #444;
+}
+
+.ds-product-social-share-facebook {
+	color: #395A99;
+}
+
+.ds-product-social-share-twitter {
+	color: #68ADD2;
+}
+
+/* Product - Add to Cart */
+.ds-product-add-cart {
+	border: 1px solid #eee;
+	border-radius: 5px;
+	margin: 10px;
+	padding: 20px;
+}
+
+.ds-product-quantity {
+	text-align: center;
+	margin: 20px;
+}
+.ds-product-add-cart-btn i {
+	background: #318840;
+	padding: 3px 4px 3px 3px;
+	border-radius: 3px;
+}
+
+/* Product - Description */
+.ds-product-description {
+	border-bottom: 1px solid #eee;
+	margin-bottom: 15px;
+}
+
+.ds-product-description-title {
+	padding: 0 20px;
+}
+
+.ds-product-description-value {
+	padding: 10px 50px;
+}
+
+/* Product - Specification */
+.ds-product-specification {
+	border-bottom: 1px solid #eee;
+	margin-bottom: 15px;
+}
+
+.ds-product-specification-title {
+	padding: 0 20px;
+}
+
+.ds-product-specification-value {
+	padding: 10px 50px;
+}

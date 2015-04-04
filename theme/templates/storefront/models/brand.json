@@ -1,0 +1,4 @@
+{
+  "url": "http://catalog-facade.apphb.com/petlove/brands/:id",
+  "cacheDuration": 3600
+}

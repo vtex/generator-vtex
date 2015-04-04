@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="{{ culture.code }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ account.name }}</title>
+  {% lib 'twitter-bootstrap' 'css/bootstrap.css' %}
+  {% dump styles %}
+</head>
+<body class="ds-theme">
+  {% block 'content' %}{% endblock %}
+
+  {% lib 'jquery' 'jquery.js' %}
+  {% lib 'twitter-bootstrap' 'js/bootstrap.js' %}
+  {% dump scripts %}
+  {% liveReload %}
+</body>
+</html>

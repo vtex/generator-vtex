@@ -1,0 +1,11 @@
+<div class="ds-product-stock">
+  {% if sku.sellers[0].offer.availableQuantity > 0 %}
+    {% if sku.sellers[0].offer.availableQuantity < 6 %}
+    <span class="ds-product-in-stock">Apenas {{ sku.sellers[0].offer.availableQuantity }} em estoque.</span>
+    {% else %}
+    <span class="ds-product-in-stock">Em Estoque.</span>
+    {% endif %}
+  {% else %}
+    <span class="ds-product-no-stock">Sem Estoque.</span>
+  {% endif %}
+</div>

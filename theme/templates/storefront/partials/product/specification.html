@@ -1,0 +1,13 @@
+<div class="ds-product-specification row">
+  <h4 id="specification" class="ds-product-specification-title col-md-12">Especificações</h4>
+  <div class="ds-product-specification-value col-md-12">
+    <table class="ds-product-specification-table table table-striped">
+    {% for spec in product.properties %}
+      <tr>
+        <th>{{ spec.key }}</th>
+        <td>{{ spec.value.first | replace:'\r\n', '<br/>'}}</td>
+      </tr>
+    {% endfor %}
+    </table>
+  </div>
+</div>

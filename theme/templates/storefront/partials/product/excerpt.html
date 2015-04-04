@@ -1,0 +1,10 @@
+<div class="ds-product-excerpt">
+	<h4 class="ds-product-excerpt-title">Descrição</h4>
+
+	{% if product.description.size > 300 %}
+		{{ product.description | truncate: 400 }}
+		<a href="#description" class="ds-product-read-description">Leia mais</a>
+	{% else %}
+		{{ product.description }}
+	{% endif %}
+</div>

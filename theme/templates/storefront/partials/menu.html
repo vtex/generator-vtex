@@ -1,0 +1,38 @@
+{% model categoryList = 'categories' %}
+
+<ul class="ds-menu dropdown-menu" role="menu">
+
+{% for department in categoryList %}
+  {% unless departmentBlackList contains department.name %}
+  <li class="dropdown" data-submenu-id="dd-cat-{{ department.id }}">
+    <a href="/{{ department.slug }}" data-toggle="dropdown" class="dropdown-toggle">
+      {{ department.name }}
+    </a>
+
+    <ul class="ds-menu dropdown-menu" id="dd-cat-{{department.id}}">
+
+    {% for category in department.children %}
+      <li class="dropdown" data-submenu-id="dd-cat-{{department.id}}-{{category.id}}">
+        <a href="/{{department.slug}}/{{category.slug}}" data-toggle="dropdown" class="dropdown-toggle">
+          {{ category.name }}
+        </a>
+
+        {% if category.children %}
+        <ul class="dropdown-menu" id="dd-cat-{{department.id}}-{{category.id}}">
+        {% for subCategory in category.children %}
+          <li>
+            <a href="/{{department.slug}}/{{category.slug}}/{{ subCategory.slug }}">{{ subCategory.name }}</a>
+          </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+
+      </li>
+    {% endfor %}
+
+    </ul>
+
+  </li>
+  {% endunless %}
+{% endfor %}
+</ul>

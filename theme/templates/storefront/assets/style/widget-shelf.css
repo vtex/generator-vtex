@@ -1,0 +1,19 @@
+.ds-shelf-item {
+	float: left;
+	width: 170px;
+	margin-right: 13px;
+}
+
+.ds-shelf-item-link {
+	height: 20px;
+}
+
+.ds-shelf-item-container {
+	height: 150px;
+	text-align: center;
+}
+
+.ds-shelf-item-image {
+	max-height: 150px;
+	max-width: 200px;
+}

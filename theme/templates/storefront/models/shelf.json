@@ -1,0 +1,13 @@
+{
+  "url": "http://catalog-facade.apphb.com/petlove/shelf",
+  "cacheDuration": 60,
+  "queryString": {
+    "c": "{{ parameters.category }}",
+    "b": "{{ parameters.brand }}",
+    "q": "{{ parameters.search }}",
+    "f": "{{ parameters.facets }}",
+    "inStockOnly": "{% if parameters.inStockOnly %}{{ parameters.inStockOnly }}{% else %}false{% endif %}",
+    "page": "{% if parameters.page %}{{ parameters.page }}{% else %}1{% endif %}",
+    "pageSize": "{% if parameters.pageSize %}{{ parameters.pageSize }}{% else %}5{% endif %}"
+  }
+}

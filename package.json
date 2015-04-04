@@ -1,0 +1,34 @@
+{
+  "name": "generator-vtex",
+  "version": "0.0.0",
+  "description": "VTEX app generator",
+  "license": "MIT",
+  "main": "app/index.js",
+  "repository": "vtex/generator-vtex",
+  "author": {
+    "name": "Breno Calazans",
+    "email": "brenocalazans@gmail.com",
+    "url": "https://github.com/brenoc"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "files": [
+    "app"
+  ],
+  "keywords": [
+    "yeoman-generator",
+    "vtex"
+  ],
+  "dependencies": {
+    "yeoman-generator": "^0.18.9",
+    "chalk": "^1.0.0",
+    "vtexsay": "^1.0.3"
+  },
+  "devDependencies": {
+    "mocha": "*"
+  }
+}

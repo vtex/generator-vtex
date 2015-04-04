@@ -1,0 +1,47 @@
+{% model shelf = 'shelf' category:search.category brand:search.brand search:search.searchTerm facets:search.facets pageSize:20 %}
+
+<div class="ds-shelf-products">
+{% for product in shelf %}
+  {% assign sku = product.items[0] %}
+  
+  {% cycle '<div class="ds-item-row row">', '', '', '', '', '' %}
+  
+    <div class="ds-item col-md-2">
+
+      <div class="ds-item-image-container">
+        <a class="ds-item-link" href="/{{ product.slug }}/p">
+            <img class="ds-item-image img-rounded" src="{% widget 'vteximg' id:'_' path:sku.images[0].path width:'185' height:'185' %}" alt="">
+        </a>
+      </div>
+      <div class="ds-item-info">
+        <a class="ds-item-name ds-item-link" href="/{{ product.slug }}/p">
+          {{ product.name }}
+        </a>
+        <span class="ds-brand">por {{ product.brand }}</span>
+      </div>
+
+      
+      {% if sku.sellers[0].offer.availableQuantity > 0 %}
+      <div class="ds-item-price-container">
+        <a class="ds-item-link" href="/{{ product.slug }}/p">
+          <span class="ds-item-price">{{ sku.sellers[0].offer.price | price }}</span>
+          {% if sku.sellers[0].offer.price < sku.sellers[0].offer.listPrice %}
+          <span class="ds-item-list-price">{{ sku.sellers[0].offer.listPrice | price }}</span>
+          {% endif %}
+        </a>
+      </div>
+      {% else %}
+      <div class="ds-item-unavailable">
+        <span class="ds-item-unavailable-text">Indisponível</span>
+      </div>
+      {% endif %}
+    </div>
+
+  {% if forloop.last %}
+  </div>
+  {% else %}
+    {% cycle '', '', '', '', '', '</div>' %}
+  {% endif %}
+
+{% endfor %}
+</div>

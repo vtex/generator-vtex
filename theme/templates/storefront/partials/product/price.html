@@ -1,0 +1,38 @@
+<div class="ds-product-price-container">
+  <table class="ds-product-price-table">
+    <tbody>
+      {% if sku.sellers[0].offer.listPrice > sku.sellers[0].offer.price %}
+      <tr class="ds-product-list-price-row">
+        <td class="ds-product-price-table-label">
+          Preço de Tabela:
+        </td>
+        <td class="ds-product-price-table-value">
+          {{ sku.sellers[0].offer.listPrice | price }}
+        </td>
+      </tr>
+      {% endif %}
+      <tr class="ds-product-price-row">
+        <td class="ds-product-price-table-label">
+          Preço:
+        </td>
+        <td class="ds-product-price-table-value">
+          {{ sku.sellers[0].offer.price | price }}
+        </td>
+      </tr>
+      {% if sku.sellers[0].offer.listPrice > sku.sellers[0].offer.price %}
+      <tr class="ds-product-savings-row">
+        <td class="ds-product-price-table-label">
+          Economia de:
+        </td>
+        <td class="ds-product-price-table-value">
+          {{ sku.sellers[0].offer.listPrice | minus: sku.sellers[0].offer.price | price }}
+
+          {% capture discount_percent %}{{ sku.sellers[0].offer.listPrice | minus: sku.sellers[0].offer.price | times: 100.0 | dividedBy: sku.sellers[0].offer.listPrice }}{% endcapture %}
+          ({{ discount_percent | split: "." | first }}%)
+
+        </td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>

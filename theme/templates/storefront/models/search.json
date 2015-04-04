@@ -1,0 +1,7 @@
+{
+  "url": "http://catalog-facade.apphb.com/petlove/search/:term",
+  "cacheDuration": 10,
+  "queryString": {
+    "map": "{{ parameters.map }}"
+  }
+}
