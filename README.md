@@ -1,4 +1,4 @@
-# generator-vtex [![Build Status](https://secure.travis-ci.org/brenoc/generator-vtex.png?branch=master)](https://travis-ci.org/brenoc/generator-vtex)
+# generator-vtex [![Build Status](https://secure.travis-ci.org/vtex/generator-vtex.png?branch=master)](https://travis-ci.org/vtex/generator-vtex)
 
 > [Yeoman](http://yeoman.io) generator
 
