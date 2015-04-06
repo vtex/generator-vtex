@@ -43,7 +43,7 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   writing: {
-    app: function () {
+    theme: function () {
       this.fs.copyTpl(
         this.templatePath('_meta.json'),
         this.destinationPath('meta.json'),
@@ -66,22 +66,8 @@ module.exports = yeoman.generators.Base.extend({
         self.mkdir('storefront/' + directory);
       });
     },
-
-    projectfiles: function () {
-      /*this.fs.copy(
-        this.templatePath('editorconfig'),
-        this.destinationPath('.editorconfig')
-      );
-      this.fs.copy(
-        this.templatePath('jshintrc'),
-        this.destinationPath('.jshintrc')
-      );*/
-    }
   },
 
   install: function () {
-    /*this.installDependencies({
-      skipInstall: this.options['skip-install']
-    });*/
   }
 });
