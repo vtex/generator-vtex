@@ -1,7 +1,7 @@
 'use strict';
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
-var yosay = require('yosay');
+var vtexsay = require('vtexsay');
 
 module.exports = yeoman.generators.Base.extend({
   constructor: function() {
@@ -19,7 +19,7 @@ module.exports = yeoman.generators.Base.extend({
     var done = this.async();
 
     // Have Yeoman greet the user.
-    this.log(yosay(
+    this.log(vtexsay(
       'Welcome to the tremendous ' + chalk.red('VTEX') + ' generator!'
     ));
 
