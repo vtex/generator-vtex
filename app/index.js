@@ -7,8 +7,8 @@ module.exports = yeoman.generators.Base.extend({
   constructor: function() {
     yeoman.Base.apply(this, arguments);
 
-    this.argument('appname', { type: String, required: false });
-    this.appname = this.appname;
+    this.argument('appName', { type: String, required: false });
+    this.appName = this.appName;
   },
 
   initializing: function () {
@@ -27,7 +27,7 @@ module.exports = yeoman.generators.Base.extend({
       type: 'input',
       name: 'name',
       message: 'What\'s your VTEX app name?',
-      default: this.appname
+      default: this.appName
     }, {
       type: 'input',
       name: 'owner',
