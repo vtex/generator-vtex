@@ -1,6 +1,6 @@
 {
   "name": "generator-vtex",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "VTEX app generator",
   "license": "MIT",
   "main": "app/index.js",
