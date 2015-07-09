@@ -1,0 +1,1 @@
+<% ignore.forEach(function(ignoreItem) { %><%= ignoreItem %><% }); %>

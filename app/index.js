@@ -1,21 +1,24 @@
 'use strict';
+var path = require('path');
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var vtexsay = require('vtexsay');
 
 module.exports = yeoman.generators.Base.extend({
   constructor: function() {
-    yeoman.Base.apply(this, arguments);
+    yeoman.generators.Base.apply(this, arguments);
+    this.sourceRoot(path.join(__dirname, '../templates'));
 
-    this.argument('appName', { type: String, required: false });
-    this.appName = this.appName;
+    this.vtexignore = {
+      'ignore': ['.git']
+    };
   },
 
   initializing: function () {
     this.pkg = require('../package.json');
   },
 
-  prompting: function () {
+  _ask: function() {
     var done = this.async();
 
     // Have Yeoman greet the user.
@@ -26,57 +29,51 @@ module.exports = yeoman.generators.Base.extend({
     var prompts = [{
       type: 'input',
       name: 'name',
-      message: 'What\'s your VTEX app name?',
-      default: this.appName
+      pattern: /^[a-z\-\_]+$/,
+      message: 'What\'s your VTEX app name?'
     }, {
       type: 'input',
-      name: 'owner',
-      message: 'What\'s your VTEX account?'
+      name: 'title',
+      pattern: /^[a-zA-Z\s\-\,\.]{0,30}$/,
+      message: 'What\'s your VTEX app friendly name?'
+    }, {
+      type: 'input',
+      name: 'vendor',
+      message: 'What\'s your VTEX account (vendor)?'
     }];
 
     this.prompt(prompts, function (props) {
       this.name = props.name;
-      this.owner = props.owner;
+      this.title = props.title;
+      this.vendor = props.vendor;
 
       done();
     }.bind(this));
   },
 
-  writing: {
-    app: function () {
-      this.fs.copyTpl(
-        this.templatePath('_meta.json'),
-        this.destinationPath('meta.json'),
-        {
-          name: this.name,
-          owner: this.owner
-        }
-      );
-      this.fs.copy(
-        this.templatePath('.vtexignore'),
-        this.destinationPath('.vtexignore')
-      );
-      this.fs.copy(
-        this.templatePath('storefront/**/*'),
-        this.destinationPath('storefront/')
-      );
-      var directories = ['assets', 'models', 'pages', 'partials', 'widgets']
-      var self = this;
-      directories.forEach(function(directory) {
-        self.mkdir('storefront/' + directory);
-      });
-    },
+  prompting: function () {
+    this._ask();
+  },
 
-    projectfiles: function () {
-      /*this.fs.copy(
-        this.templatePath('editorconfig'),
-        this.destinationPath('.editorconfig')
-      );
-      this.fs.copy(
-        this.templatePath('jshintrc'),
-        this.destinationPath('.jshintrc')
-      );*/
-    }
+  _copyBasic: function() {
+    this.fs.copyTpl(
+      this.templatePath('_meta.json'),
+      this.destinationPath('meta.json'),
+      {
+        name: this.name,
+        title: this.title,
+        vendor: this.vendor
+      }
+    );
+    this.fs.copyTpl(
+      this.templatePath('_vtexignore'),
+      this.destinationPath('.vtexignore'),
+      this.vtexignore
+    );
+  },
+
+  writing: function() {
+    this._copyBasic();
   },
 
   install: function () {
