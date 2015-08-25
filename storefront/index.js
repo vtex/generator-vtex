@@ -118,13 +118,27 @@ module.exports = galleryAppGenetaror.extend({
   },
 
   _copySourceExampleFiles: function() {
+    var options = {
+      name: this.name,
+      vendor: this.vendor
+    };
+
     this.fs.copyTpl(
-      this.templatePath('_storefront/src/**/*'),
-      this.destinationPath('src'),
-      {
-        name: this.name,
-        vendor: this.vendor
-      }
+      this.templatePath('_storefront/src/pages/HomePage.jsx'),
+      this.destinationPath('src/pages/HomePage.jsx'),
+      options
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('_storefront/src/styles/style.less'),
+      this.destinationPath('src/styles/style.less'),
+      options
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('_storefront/src/index.jsx'),
+      this.destinationPath('src/' + this.name + '.jsx'),
+      options
     );
   },
 

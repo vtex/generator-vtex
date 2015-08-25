@@ -1,9 +1,9 @@
-import Home from 'pages/Home';
+import HomePage from 'pages/HomePage';
 import { dispatcher } from 'sdk';
 
 let component = {
   name: 'HomePage@<%= vendor %>.<%= name %>',
-  constructor: Home
+  constructor: HomePage
 };
 
 dispatcher.actions.ComponentActions.register(component);

@@ -1,6 +1,6 @@
 var HomePage = React.createClass({
   render: function() {
-    return React.createElement("h1", {}, "Olá, mundo!");
+    return React.createElement("h1", {}, "Hello world!");
   }
 })
 
