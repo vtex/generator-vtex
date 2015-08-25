@@ -58,7 +58,7 @@ module.exports = galleryAppGenetaror.extend({
     this.mkdir('storefront');
 
     this.mkdir('storefront/assets');
-    this.mkdir('storefront/models');
+    this.mkdir('storefront/resources');
     this.mkdir('storefront/components');
   },
 
