@@ -155,6 +155,12 @@ module.exports = galleryAppGenetaror.extend({
       this.destinationPath('src/' + this.name + '.jsx'),
       options
     );
+
+    this.fs.copyTpl(
+      this.templatePath('_storefront/src/index-editor.jsx'),
+      this.destinationPath('src/' + this.name + '-editor.jsx'),
+      options
+    );
   },
 
   writing: {
