@@ -39,9 +39,13 @@ module.exports = galleryAppGenetaror.extend({
   },
 
   _copyStorefrontBasic: function() {
-    this.fs.copy(
+    this.fs.copyTpl(
       this.templatePath('_storefront/storefront/*'),
-      this.destinationPath('storefront/')
+      this.destinationPath('storefront/'),
+      {
+        name: this.name,
+        vendor: this.vendor
+      }
     );
     var directories = ['assets', 'models', 'components']
     var self = this;
@@ -70,9 +74,13 @@ module.exports = galleryAppGenetaror.extend({
   },
 
   _copySourceStructure: function() {
-    this.fs.copy(
+    this.fs.copyTpl(
       this.templatePath('_storefront/src/**/*'),
-      this.destinationPath('src')
+      this.destinationPath('src'),
+      {
+        name: this.name,
+        vendor: this.vendor
+      }
     );
     var directories = ['components', 'pages', 'styles', 'utils'];
     var self = this;

@@ -1,8 +1,7 @@
 import React from 'react';
+import style from 'styles/style.less'; // eslint-disable-line
 
-
-let Home = React.createClass({
-
+class Home extends React.Component {
   render() {
     return (
       <div>
@@ -10,6 +9,6 @@ let Home = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default Home;

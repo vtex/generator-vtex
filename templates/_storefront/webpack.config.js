@@ -1,11 +1,17 @@
 var webpack = require('webpack');
 var path = require('path');
-var nodeModulesDir = path.join(__dirname, 'node_modules');
 var pkg = require('./package.json');
 var meta = require('./meta.json');
 var publicPath = '/assets/@' + meta.vendor + '.' + pkg.name + '/';
 var production = process.env.NODE_ENV === 'production';
 var hot = process.env.NODE_ENV === 'hot';
+var svgoConfig = JSON.stringify({
+  plugins: [
+    {removeTitle: true},
+    {convertColors: {shorthex: false}},
+    {convertPathData: false}
+  ]
+});
 
 module.exports = {
   devtool: 'sourcemap',
@@ -13,17 +19,27 @@ module.exports = {
   watch: production ? false : true,
 
   entry: hot ? [
-    'webpack-dev-server/client?http://0.0.0.0:3000',
-    'webpack/hot/only-dev-server',
-    './src/' + pkg.name + '.jsx'
+    '.':
+      [
+        'webpack-dev-server/client?http://0.0.0.0:3000',
+        'webpack/hot/only-dev-server',
+        './src/' + pkg.name + '.jsx'
+      ],
+    editor:
+      [
+        'webpack/hot/only-dev-server',
+        './src/' + pkg.name + '-editor.jsx'
+      ]
   ] : [
-    './src/' + pkg.name + '.jsx'
+    '.': './src/' + pkg.name + '.jsx',
+    editor: './src/' + pkg.name + '-editor.jsx'
   ],
 
   externals: {
-    'storefront': 'storefront',
+    'sdk': 'storefront.sdk',
     'react': 'React',
     'react-router': 'ReactRouter',
+    'lodash': 'lodash',
     intl: 'Intl',
     'react-intl': 'ReactIntl'
   },
@@ -31,21 +47,25 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.jsx'],
     alias: {
-      'components': path.join(__dirname, '/src/components/'),
-      'pages': path.join(__dirname, '/src/pages/'),
-      'styles': path.join(__dirname, '/src/styles/'),
-      'utils': path.join(__dirname, '/src/utils/')
+      'editors': path.join(__dirname, '/src/editors'),
+      'assets': path.join(__dirname, '/src/assets'),
+      'components': path.join(__dirname, '/src/components'),
+      'pages': path.join(__dirname, '/src/pages'),
+      'styles': path.join(__dirname, '/src/styles'),
+      'utils': path.join(__dirname, '/src/utils')
     }
   },
 
   output: {
     path: path.resolve(__dirname, './storefront/assets/'),
     publicPath: publicPath,
-    filename: pkg.name + '.js'
+    filename: '[name]/' + pkg.name + '.js',
+    chunkFilename: pkg.name + '-[name].js',
+    devtoolModuleFilenameTemplate: 'webpack:///' + pkg.name + '/[resource]?[hash][id]'
   },
 
-  jshint: {
-    esnext: true
+  eslint: {
+    configFile: '.eslintrc'
   },
 
   module: {
@@ -60,12 +80,12 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx$/,
-        exclude: [nodeModulesDir],
-        loaders: hot ? ['react-hot', 'babel-loader?stage=1'] : ['babel-loader?stage=1']
+        exclude: /node_modules/,
+        loaders: hot ? ['react-hot', 'babel-loader?stage=0'] : ['babel-loader?stage=0']
       }, {
         test: /\.js$/,
-        exclude: [nodeModulesDir],
-        loaders: ['babel-loader?stage=1']
+        exclude: /node_modules/,
+        loaders: ['babel-loader?stage=0']
       }, {
         test: /\.less$/,
         loader: 'style-loader!css-loader!less-loader'
@@ -73,7 +93,10 @@ module.exports = {
         test: /\.css$/,
         loader: 'style-loader!css-loader'
       }, {
-        test: /\.(png|jpg|woff|ttf|eot|svg|woff2)$/,
+        test: /\.svg$/,
+        loaders: ['raw-loader', 'svgo-loader?' + svgoConfig]
+      }, {
+        test: /\.(png|jpg|woff|ttf|eot|woff2)$/,
         loader: 'url-loader?limit=100000'
       }, {
         test: /\.jpg$/,
@@ -87,6 +110,9 @@ module.exports = {
     new webpack.optimize.UglifyJsPlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin()
+  ] : hot ? [
+    new webpack.NoErrorsPlugin(),
+    new webpack.HotModuleReplacementPlugin()
   ] : [],
 
   quiet: false,
