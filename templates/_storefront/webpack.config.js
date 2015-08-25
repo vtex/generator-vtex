@@ -18,7 +18,7 @@ module.exports = {
 
   watch: production ? false : true,
 
-  entry: hot ? [
+  entry: hot ? {
     '.':
       [
         'webpack-dev-server/client?http://0.0.0.0:3000',
@@ -30,10 +30,10 @@ module.exports = {
         'webpack/hot/only-dev-server',
         './src/' + pkg.name + '-editor.jsx'
       ]
-  ] : [
+  } : {
     '.': './src/' + pkg.name + '.jsx',
     editor: './src/' + pkg.name + '-editor.jsx'
-  ],
+  },
 
   externals: {
     'sdk': 'storefront.sdk',
