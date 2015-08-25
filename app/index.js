@@ -46,6 +46,7 @@ module.exports = yeoman.generators.Base.extend({
       this.name = props.name;
       this.title = props.title;
       this.vendor = props.vendor;
+      this.meta = {};
 
       done();
     }.bind(this));
@@ -62,7 +63,8 @@ module.exports = yeoman.generators.Base.extend({
       {
         name: this.name,
         title: this.title,
-        vendor: this.vendor
+        vendor: this.vendor,
+        meta: this.meta
       }
     );
     this.fs.copyTpl(
