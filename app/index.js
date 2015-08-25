@@ -69,8 +69,7 @@ module.exports = yeoman.generators.Base.extend({
     );
     this.fs.copyTpl(
       this.templatePath('_vtexignore'),
-      this.destinationPath('.vtexignore'),
-      this.vtexignore
+      this.destinationPath('.vtexignore')
     );
   },
 

@@ -4,6 +4,8 @@
   "description": "",
   "version": "0.1.0",
   "vendor": "<%= vendor %>",
-  "dependencies": {},
+  "dependencies": {
+<% if (meta.storefront) { %>    "storefront": 1<% } %>
+  },
   "schemas": {}
 }

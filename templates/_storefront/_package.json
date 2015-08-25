@@ -7,18 +7,26 @@
   "devDependencies": {
     "babel-core": "^5.2.16",
     "babel-eslint": "^3.1.20",
-    "less": "^2.4.0",
     "babel-loader": "^5.2.0",
+    "bootstrap": "^3.3.4",
+    "css-loader": "^0.9.1",
+    "eslint": "=1.0.0",
     "eslint-loader": "^0.14.1",
     "eslint-plugin-react": "^2.6.4",
-    "css-loader": "^0.9.1",
     "file-loader": "^0.8.1",
+    "less": "^2.4.0",
     "less-loader": "^2.2.0",
     "loader-utils": "^0.2.6",
+    "minimist": "^1.1.1",
+    "raw-loader": "^0.5.1",
+    "react": "^0.13.3",
     "react-hot-loader": "^1.2.7",
     "style-loader": "^0.9.0",
+    "svgo": "^0.5.5",
+    "svgo-loader": "^1.1.0",
     "url-loader": "^0.5.5",
-    "webpack": "^1.8.11"
+    "webpack": "^1.8.11",
+    "webpack-dev-server": "^1.10.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -26,6 +34,6 @@
     "prereleasy": "NODE_ENV=production webpack",
     "postreleasy": "vtex publish"
   },<% } else { %>
-  "scripts": {},<% } %>  
+  "scripts": {},<% } %>
   "dependencies": {}
 }

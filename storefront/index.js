@@ -39,20 +39,45 @@ module.exports = galleryAppGenetaror.extend({
     }
   },
 
+  _createStorefrontDirectories: function() {
+    this.mkdir('storefront');
+
+    this.mkdir('storefront/assets');
+    this.mkdir('storefront/models');
+    this.mkdir('storefront/components');
+  },
+
   _copyStorefrontBasic: function() {
     this.fs.copyTpl(
-      this.templatePath('_storefront/storefront/*'),
+      this.templatePath('_storefront/basic-storefront/**/*'),
       this.destinationPath('storefront/'),
       {
         name: this.name,
         vendor: this.vendor
       }
     );
-    var directories = ['assets', 'models', 'components']
-    var self = this;
-    directories.forEach(function(directory) {
-      self.mkdir('./storefront/' + directory);
-    });
+  },
+
+  _copyStorefrontDev: function() {
+    this.fs.copyTpl(
+      this.templatePath('_storefront/dev-storefront/*'),
+      this.destinationPath('storefront/'),
+      {
+        name: this.name,
+        vendor: this.vendor
+      }
+    );
+  },
+
+  _copyGitignore: function() {
+    this.fs.copyTpl(
+      this.templatePath('_storefront/_gitignore'),
+      this.destinationPath('.gitignore'),
+      {
+        name: this.name,
+        vendor: this.vendor
+      }
+    );
   },
 
   _copyPackageJSON: function() {
@@ -69,25 +94,9 @@ module.exports = galleryAppGenetaror.extend({
 
   _copyEsLintRC: function() {
     this.fs.copy(
-      this.templatePath('_storefront/.eslintrc'),
+      this.templatePath('_storefront/eslintrc'),
       this.destinationPath('.eslintrc')
     );
-  },
-
-  _copySourceStructure: function() {
-    this.fs.copyTpl(
-      this.templatePath('_storefront/src/**/*'),
-      this.destinationPath('src'),
-      {
-        name: this.name,
-        vendor: this.vendor
-      }
-    );
-    var directories = ['components', 'pages', 'styles', 'utils'];
-    var self = this;
-    directories.forEach(function(directory) {
-      self.mkdir('src/' + directory);
-    });
   },
 
   _copyWebpackConfig: function() {
@@ -97,17 +106,44 @@ module.exports = galleryAppGenetaror.extend({
     );
   },
 
+  _createSourceDirectories: function() {
+    this.mkdir('src/');
+
+    this.mkdir('src/editors');
+    this.mkdir('src/assets');
+    this.mkdir('src/components');
+    this.mkdir('src/pages');
+    this.mkdir('src/styles');
+    this.mkdir('src/utils');
+  },
+
+  _copySourceExampleFiles: function() {
+    this.fs.copyTpl(
+      this.templatePath('_storefront/src/**/*'),
+      this.destinationPath('src'),
+      {
+        name: this.name,
+        vendor: this.vendor
+      }
+    );
+  },
+
   writing: {
     method1: function() {
       this._copyBasic();
     },
     method2: function () {
-      this._copyStorefrontBasic();
+      this._createStorefrontDirectories();
+      this._copyGitignore();
+
       if (this.webpack) {
-        this._copySourceStructure();
-        this.vtexignore.ignore.push('package.json');
+        this._createSourceDirectories();
+        this._copyStorefrontDev();
+        this._copySourceExampleFiles();
         this._copyPackageJSON();
         this._copyWebpackConfig();
+      } else {
+        this._copyStorefrontBasic();
       }
     }
   },
