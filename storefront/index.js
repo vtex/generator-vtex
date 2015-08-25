@@ -177,6 +177,7 @@ module.exports = galleryAppGenetaror.extend({
         this._copySourceExampleFiles();
         this._copyPackageJSON();
         this._copyWebpackConfig();
+        this._copyEsLintRC();
       } else {
         this._copyStorefrontBasic();
       }
