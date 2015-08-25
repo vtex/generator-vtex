@@ -74,13 +74,21 @@ module.exports = galleryAppGenetaror.extend({
   },
 
   _copyStorefrontDev: function() {
+    var options = {
+      name: this.name,
+      vendor: this.vendor
+    };
+
     this.fs.copyTpl(
-      this.templatePath('_storefront/dev-storefront/*'),
-      this.destinationPath('storefront/'),
-      {
-        name: this.name,
-        vendor: this.vendor
-      }
+      this.templatePath('_storefront/dev-storefront/layout.html'),
+      this.destinationPath('storefront/layout.html'),
+      options
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('_storefront/dev-storefront/components/HomePage.json'),
+      this.destinationPath('storefront/components/HomePage.json'),
+      options
     );
   },
 
