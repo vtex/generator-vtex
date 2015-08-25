@@ -22,6 +22,7 @@ module.exports = galleryAppGenetaror.extend({
     },
     method2: function() {
       var done = this.async();
+      var self = this;
 
       var prompts = [{
         type: 'confirm',
@@ -31,10 +32,24 @@ module.exports = galleryAppGenetaror.extend({
       }];
 
       this.prompt(prompts, function (props) {
-        this.meta = { storefront: true };
-        this.webpack = props.webpack;
+        self.meta = { storefront: true };
+        self.webpack = props.webpack;
 
-        done();
+        if (self.webpack) {
+          self.prompt({
+            type: 'confirm',
+            name: 'skipInstall',
+            message: 'Skip node dependencies installation?',
+            default: false
+          }, function(answer) {
+            self.skipInstall = answer.skipInstall;
+            done();
+          })
+        } else {
+          self.skipInstall = props.true;
+          done();
+        }
+
       }.bind(this));
     }
   },
@@ -163,5 +178,8 @@ module.exports = galleryAppGenetaror.extend({
   },
 
   install: function () {
+    if (this.webpack) {
+      this.installDependencies({ skipInstall: this.skipInstall });
+    }
   }
 });
