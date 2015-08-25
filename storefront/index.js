@@ -27,7 +27,7 @@ module.exports = galleryAppGenetaror.extend({
       var prompts = [{
         type: 'confirm',
         name: 'webpack',
-        message: 'Would you like to use standard structure (React + Webpack)?',
+        message: 'Would you like to use the standard dev structure (ES7 + LESS + Webpack + eslint)?',
         default: true
       }];
 
