@@ -10,6 +10,9 @@ module.exports = galleryAppGenetaror.extend({
   constructor: function() {
     galleryAppGenetaror.apply(this, arguments);
     this.sourceRoot(path.join(__dirname, '../templates'));
+
+    this.option('simple');
+    this.simple = this.options.simple;
   },
 
   initializing: function () {
@@ -21,36 +24,37 @@ module.exports = galleryAppGenetaror.extend({
       this._ask();
     },
     method2: function() {
-      var done = this.async();
-      var self = this;
+      if (!this.simple) {
+        var done = this.async();
+        var self = this;
 
-      var prompts = [{
-        type: 'confirm',
-        name: 'webpack',
-        message: 'Would you like to use the standard dev structure (ES7 + LESS + Webpack + eslint)?',
-        default: true
-      }];
+        var prompts = [{
+          type: 'confirm',
+          name: 'webpack',
+          message: 'Would you like to use the standard dev structure (ES7 + LESS + Webpack + eslint)?',
+          default: true
+        }];
 
-      this.prompt(prompts, function (props) {
-        self.meta = { storefront: true };
-        self.webpack = props.webpack;
+        this.prompt(prompts, function (props) {
+          self.meta = { storefront: true };
+          self.webpack = props.webpack;
 
-        if (self.webpack) {
-          self.prompt({
-            type: 'confirm',
-            name: 'installNodeDependencies',
-            message: 'Install node dependencies?',
-            default: true
-          }, function(answer) {
-            self.installNodeDependencies = answer.installNodeDependencies;
+          if (self.webpack) {
+            self.prompt({
+              type: 'confirm',
+              name: 'installNodeDependencies',
+              message: 'Install node dependencies?',
+              default: true
+            }, function(answer) {
+              self.installNodeDependencies = answer.installNodeDependencies;
+              done();
+            })
+          } else {
+            self.installNodeDependencies = false;
             done();
-          })
-        } else {
-          self.installNodeDependencies = false;
-          done();
-        }
-
-      }.bind(this));
+          }
+        });
+      }
     }
   },
 
