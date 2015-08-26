@@ -80,12 +80,6 @@ module.exports = galleryAppGenetaror.extend({
     };
 
     this.fs.copyTpl(
-      this.templatePath('_storefront/dev-storefront/layout.html'),
-      this.destinationPath('storefront/layout.html'),
-      options
-    );
-
-    this.fs.copyTpl(
       this.templatePath('_storefront/dev-storefront/components/HomePage.json'),
       this.destinationPath('storefront/components/HomePage.json'),
       options
