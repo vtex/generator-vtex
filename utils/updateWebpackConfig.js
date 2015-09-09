@@ -39,7 +39,6 @@ function updateColdEntryPoints(ast, context) {
 
   if (value && value.nodes && value.nodes[0] && value.nodes[0].init && value.nodes[0].init.properties.length > 0) {
     var properties = value.nodes[0].init.properties;
-    console.log(properties);
     properties.push({
       type: 'Property',
       key: {
@@ -51,7 +50,6 @@ function updateColdEntryPoints(ast, context) {
         value: '.src/' + context.componentName + '/index.js'
       }
     });
-    console.log(properties);
   }
 
   return ast;
