@@ -1,12 +1,12 @@
-import HomePage from 'pages/HomePage';
-import { dispatcher } from 'sdk';
+import { actions } from 'sdk';
+import HomePage from './HomePage';
 
 let component = {
   name: 'HomePage@<%= vendor %>.<%= name %>',
   constructor: HomePage
 };
 
-dispatcher.actions.ComponentActions.register(component);
+actions.ComponentActions.register(component);
 
 // Enable react hot loading with external React
 // see https://github.com/gaearon/react-hot-loader/tree/master/docs#usage-with-external-react

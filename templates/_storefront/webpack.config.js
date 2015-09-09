@@ -19,20 +19,20 @@ module.exports = {
   watch: production ? false : true,
 
   entry: hot ? {
-    '.':
+    'HomePage':
       [
         'webpack-dev-server/client?http://127.0.0.1:3000',
         'webpack/hot/only-dev-server',
-        './src/' + pkg.name + '.jsx'
+        './src/pages/HomePage/index.js'
       ],
-    editor:
+    'editors/index':
       [
         'webpack/hot/only-dev-server',
-        './src/' + pkg.name + '-editor.jsx'
+        './src/editors/index.js'
       ]
   } : {
-    '.': './src/' + pkg.name + '.jsx',
-    editor: './src/' + pkg.name + '-editor.jsx'
+    'HomePage': './src/pages/HomePage/index.js',
+    'editors/index': './src/editors/index.js'
   },
 
   externals: {
@@ -45,13 +45,12 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['', '.js'],
     alias: {
-      'editors': path.join(__dirname, '/src/editors'),
       'assets': path.join(__dirname, '/src/assets'),
       'components': path.join(__dirname, '/src/components'),
+      'editors': path.join(__dirname, '/src/editors'),
       'pages': path.join(__dirname, '/src/pages'),
-      'styles': path.join(__dirname, '/src/styles'),
       'utils': path.join(__dirname, '/src/utils')
     }
   },
@@ -61,6 +60,7 @@ module.exports = {
     publicPath: publicPath,
     filename: '[name]/' + pkg.name + '.js',
     chunkFilename: pkg.name + '-[name].js',
+    jsonpFunction: 'webpackJsonp_' + meta.vendor.replace('-', '') + '_' + meta.name.replace('-', ''),
     devtoolModuleFilenameTemplate: 'webpack:///' + pkg.name + '/[resource]?[hash][id]'
   },
 
@@ -71,7 +71,7 @@ module.exports = {
   module: {
     preLoaders: [
       {
-        test: /\.js$|\.jsx$/,
+        test: /\.js$/,
         exclude: /node_modules/,
         loader: 'eslint-loader'
       }
@@ -79,13 +79,9 @@ module.exports = {
 
     loaders: [
       {
-        test: /\.jsx$/,
-        exclude: /node_modules/,
-        loaders: hot ? ['react-hot', 'babel-loader?stage=0'] : ['babel-loader?stage=0']
-      }, {
         test: /\.js$/,
         exclude: /node_modules/,
-        loaders: ['babel-loader?stage=0']
+        loaders: hot ? ['react-hot', 'babel-loader?stage=0'] : ['babel-loader?stage=0']
       }, {
         test: /\.less$/,
         loader: 'style-loader!css-loader!less-loader'
@@ -109,11 +105,15 @@ module.exports = {
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.AggressiveMergingPlugin()
+    new webpack.optimize.AggressiveMergingPlugin(),
+    new webpack.optimize.CommonsChunkPlugin('common.js')
   ] : hot ? [
     new webpack.NoErrorsPlugin(),
-    new webpack.HotModuleReplacementPlugin()
-  ] : [],
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.optimize.CommonsChunkPlugin('common.js')
+  ] : [
+    new webpack.optimize.CommonsChunkPlugin('common.js')
+  ],
 
   quiet: false,
 

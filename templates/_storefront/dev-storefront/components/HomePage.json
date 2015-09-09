@@ -4,6 +4,7 @@
     "path": "/"
   },
   "assets": [
+    "common.js",
     "<%= name %>.js"
   ]
 }

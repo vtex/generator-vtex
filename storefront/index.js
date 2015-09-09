@@ -31,7 +31,7 @@ module.exports = galleryAppGenetaror.extend({
         var prompts = [{
           type: 'confirm',
           name: 'webpack',
-          message: 'Would you like to use the standard dev structure (ES7 + LESS + Webpack + eslint)?',
+          message: 'Would you like to use the standard dev structure (ES6/7 + LESS + Webpack + eslint)?',
           default: true
         }];
 
@@ -130,11 +130,10 @@ module.exports = galleryAppGenetaror.extend({
   _createSourceDirectories: function() {
     this.mkdir('src/');
 
-    this.mkdir('src/editors');
     this.mkdir('src/assets');
     this.mkdir('src/components');
+    this.mkdir('src/editors');
     this.mkdir('src/pages');
-    this.mkdir('src/styles');
     this.mkdir('src/utils');
   },
 
@@ -145,26 +144,32 @@ module.exports = galleryAppGenetaror.extend({
     };
 
     this.fs.copyTpl(
-      this.templatePath('_storefront/src/pages/HomePage.jsx'),
-      this.destinationPath('src/pages/HomePage.jsx'),
+      this.templatePath('_storefront/src/components/HelloWorld/HelloWorld.js'),
+      this.destinationPath('src/components/HelloWorld/HelloWorld.js'),
       options
     );
 
     this.fs.copyTpl(
-      this.templatePath('_storefront/src/styles/style.less'),
-      this.destinationPath('src/styles/style.less'),
+      this.templatePath('_storefront/src/pages/HomePage/HomePage.js'),
+      this.destinationPath('src/pages/HomePage/HomePage.js'),
       options
     );
 
     this.fs.copyTpl(
-      this.templatePath('_storefront/src/index.jsx'),
-      this.destinationPath('src/' + this.name + '.jsx'),
+      this.templatePath('_storefront/src/pages/HomePage/HomePage.less'),
+      this.destinationPath('src/pages/HomePage/HomePage.less'),
       options
     );
 
     this.fs.copyTpl(
-      this.templatePath('_storefront/src/index-editor.jsx'),
-      this.destinationPath('src/' + this.name + '-editor.jsx'),
+      this.templatePath('_storefront/src/pages/HomePage/index.js'),
+      this.destinationPath('src/pages/HomePage/index.js'),
+      options
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('_storefront/src/editors/index.js'),
+      this.destinationPath('src/editors/index.js'),
       options
     );
   },

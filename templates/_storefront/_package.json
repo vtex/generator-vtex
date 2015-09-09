@@ -25,7 +25,7 @@
     "svgo": "^0.5.5",
     "svgo-loader": "^1.1.0",
     "url-loader": "^0.5.5",
-    "webpack": "^1.8.11",
+    "webpack": "~1.9.12",
     "webpack-dev-server": "^1.10.1"
   },
   "scripts": {
