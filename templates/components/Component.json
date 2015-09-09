@@ -1,5 +1,10 @@
-{
+{<% if (page) { %>
+  "route": {
+    "name": "",
+    "path": ""
+  },<% } %>
   "assets": [
-    "<%= appName %>.js"
+    "common.js",
+    "<%= componentName %>.js"
   ]
 }
