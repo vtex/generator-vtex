@@ -5,6 +5,6 @@
   },
   "assets": [
     "common.js",
-    "<%= name %>.js"
+    "HomePage.js"
   ]
 }
