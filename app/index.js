@@ -29,7 +29,7 @@ module.exports = yeoman.generators.Base.extend({
     var prompts = [{
       type: 'input',
       name: 'name',
-      message: 'What\'s your VTEX app name?'
+      message: 'What\'s your VTEX app name?',
       validate: function(input) {
         var done = this.async();
         if (!new RegExp(/^[a-z\-\_]+$/).test(input)) {
