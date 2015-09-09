@@ -7,7 +7,7 @@ class HomePage extends React.Component {
     return (
       <div>
         <HelloWorld />
-        <p>Crie, construa, inove!</p>
+        <p className="message">Crie, construa, inove!</p>
       </div>
     );
   }
