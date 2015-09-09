@@ -13,27 +13,31 @@ var svgoConfig = JSON.stringify({
   ]
 });
 
+var hotEntryPoints = {
+  'HomePage':
+    [
+      'webpack-dev-server/client?http://127.0.0.1:3000',
+      'webpack/hot/only-dev-server',
+      './src/pages/HomePage/index.js'
+    ],
+  'editors/index':
+    [
+      'webpack/hot/only-dev-server',
+      './src/editors/index.js'
+    ]
+};
+
+var coldEntryPoints = {
+  'HomePage': './src/pages/HomePage/index.js',
+  'editors/index': './src/editors/index.js'
+};
+
 module.exports = {
   devtool: 'sourcemap',
 
   watch: production ? false : true,
 
-  entry: hot ? {
-    'HomePage':
-      [
-        'webpack-dev-server/client?http://127.0.0.1:3000',
-        'webpack/hot/only-dev-server',
-        './src/pages/HomePage/index.js'
-      ],
-    'editors/index':
-      [
-        'webpack/hot/only-dev-server',
-        './src/editors/index.js'
-      ]
-  } : {
-    'HomePage': './src/pages/HomePage/index.js',
-    'editors/index': './src/editors/index.js'
-  },
+  entry: hot ? hotEntryPoints : coldEntryPoints,
 
   externals: {
     'sdk': 'storefront.sdk',

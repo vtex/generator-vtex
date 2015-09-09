@@ -24,7 +24,7 @@ function updateHotEntryPoints(ast, context) {
           },
           {
             type: 'Literal',
-            value: '.src/' + context.componentName + '/index.js'
+            value: './src/' + context.componentName + '/index.js'
           },
         ]
       }
@@ -47,7 +47,7 @@ function updateColdEntryPoints(ast, context) {
       },
       value: {
         type: 'Literal',
-        value: '.src/' + context.componentName + '/index.js'
+        value: './src/pages/' + context.componentName + '/index.js'
       }
     });
   }
