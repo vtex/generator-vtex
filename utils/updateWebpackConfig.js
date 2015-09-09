@@ -1,4 +1,5 @@
 var program = require('ast-query');
+var chalk = require('chalk');
 
 function updateHotEntryPoints(ast, context) {
   var value = ast.var('hotEntryPoints');
@@ -29,6 +30,8 @@ function updateHotEntryPoints(ast, context) {
         ]
       }
     });
+  } else {
+    context.log(chalk.yellow('\nCould not find variable "hotEntryPoints" in "webpack.config.js"!\n'));
   }
 
   return ast;
@@ -50,6 +53,8 @@ function updateColdEntryPoints(ast, context) {
         value: './src/pages/' + context.componentName + '/index.js'
       }
     });
+  } else {
+    context.log(chalk.yellow('\nCould not find variable "coldEntryPoints" in "webpack.config.js"!\n'));
   }
 
   return ast;
