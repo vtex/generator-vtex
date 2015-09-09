@@ -1,9 +1,9 @@
 {
   "name": "<%= name %>",
-  "title": "<%= title %>",
+  "vendor": "<%= vendor %>",
+  "title": "",
   "description": "",
   "version": "0.1.0",
-  "vendor": "<%= vendor %>",
   "dependencies": {
   },
   "schemas": {

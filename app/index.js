@@ -29,13 +29,15 @@ module.exports = yeoman.generators.Base.extend({
     var prompts = [{
       type: 'input',
       name: 'name',
-      pattern: /^[a-z\-\_]+$/,
       message: 'What\'s your VTEX app name?'
-    }, {
-      type: 'input',
-      name: 'title',
-      pattern: /^[a-zA-Z\s\-\,\.]{0,30}$/,
-      message: 'What\'s your VTEX app friendly name?'
+      validate: function(input) {
+        var done = this.async();
+        if (!new RegExp(/^[a-z\-\_]+$/).test(input)) {
+          done("The app name should only contain letters, '-' or '_'.");
+        } else {
+          done(true);
+        }
+      }
     }, {
       type: 'input',
       name: 'vendor',
@@ -44,7 +46,6 @@ module.exports = yeoman.generators.Base.extend({
 
     this.prompt(prompts, function (props) {
       this.name = props.name;
-      this.title = props.title;
       this.vendor = props.vendor;
       this.meta = {};
 
@@ -62,7 +63,6 @@ module.exports = yeoman.generators.Base.extend({
       this.destinationPath('meta.json'),
       {
         name: this.name,
-        title: this.title,
         vendor: this.vendor,
         meta: this.meta
       }
