@@ -2,6 +2,7 @@
 var path = require('path');
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
+var vtexsay = require('vtexsay');
 
 var updateWebpackConfig = require('../utils/updateWebpackConfig');
 var galleryAppGenetaror = require('../app/');
@@ -21,6 +22,10 @@ module.exports = yeoman.generators.Base.extend({
     method1: function() {
       var done = this.async();
       var self = this;
+
+      this.log(vtexsay(
+        'Welcome to the tremendous ' + chalk.red('VTEX') + ' generator!'
+      ));
 
       var prompts = [{
         message: 'What type of component do you want to generate?',
