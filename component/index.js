@@ -34,11 +34,29 @@ module.exports = yeoman.generators.Base.extend({
         pattern: /^[a-z\-\_]+$/
       }];
 
-      self.prompt(prompts, function (props) {
+      self.prompt(prompts, function(props) {
         self.componentType = props.componentType;
         self.componentName = props.componentName;
 
-        done();
+        if (self.componentType === 'Page') {
+          self.prompt([{
+            message: 'What\'s the route\'s name?',
+            type: 'input',
+            name: 'routeName',
+            pattern: /^[a-z]+$/
+          }, {
+            message: 'What\'s the route\'s path?',
+            type: 'input',
+            name: 'routePath'
+          }], function(routeProps) {
+            self.routeName = routeProps.routeName;
+            self.routePath = routeProps.routePath;
+
+            done();
+          });
+        } else {
+          done();
+        }
       }.bind(this));
     }
   },
@@ -99,7 +117,9 @@ module.exports = yeoman.generators.Base.extend({
       this.destinationPath('storefront/components/' + this.componentName + '.json'),
       {
         componentName: this.componentName,
-        page: (this.componentType === 'Page')
+        page: (this.componentType === 'Page'),
+        routeName: this.routeName,
+        routePath: this.routePath
       }
     );
   },

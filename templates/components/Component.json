@@ -1,7 +1,7 @@
 {<% if (page) { %>
   "route": {
-    "name": "",
-    "path": ""
+    "name": "<%= routeName %>",
+    "path": "<%= routePath %>"
   },<% } %>
   "assets": [
     "common.js",
