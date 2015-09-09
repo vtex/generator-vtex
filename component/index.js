@@ -39,7 +39,7 @@ module.exports = yeoman.generators.Base.extend({
         validate: function(input) {
           var done = this.async();
           if (!new RegExp(/^[A-z\-\_]+$/).test(input)) {
-            done("The component name should be only letters, '-' or '_'.");
+            done("The component name should only contain letters, '-' or '_'.");
           } else {
             done(true);
           }
@@ -57,7 +57,7 @@ module.exports = yeoman.generators.Base.extend({
             name: 'routeName',
             validate: function(input) {
               if (!new RegExp(/^[a-z]+$/).test(input)) {
-                return "The route name should be only lowercase letters.";
+                return "The route name should only contain lowercase letters.";
               };
               return true;
             }
