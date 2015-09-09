@@ -33,10 +33,17 @@ module.exports = yeoman.generators.Base.extend({
         name: 'componentType',
         type: 'list'
       }, {
-        message: 'What\'s the component name?',
+        message: 'What\'s the component name? (eg: ProductPage)',
         type: 'input',
         name: 'componentName',
-        pattern: /^[a-z\-\_]+$/
+        validate: function(input) {
+          var done = this.async();
+          if (!new RegExp(/^[A-z\-\_]+$/).test(input)) {
+            done("The component name should be only letters, '-' or '_'.");
+          } else {
+            done(true);
+          }
+        }
       }];
 
       self.prompt(prompts, function(props) {
@@ -45,12 +52,17 @@ module.exports = yeoman.generators.Base.extend({
 
         if (self.componentType === 'Page') {
           self.prompt([{
-            message: 'What\'s the route\'s name?',
+            message: 'What\'s the route\'s name? (eg: product)',
             type: 'input',
             name: 'routeName',
-            pattern: /^[a-z]+$/
+            validate: function(input) {
+              if (!new RegExp(/^[a-z]+$/).test(input)) {
+                return "The route name should be only lowercase letters.";
+              };
+              return true;
+            }
           }, {
-            message: 'What\'s the route\'s path?',
+            message: 'What\'s the route\'s path? (eg: /:product/p)',
             type: 'input',
             name: 'routePath'
           }], function(routeProps) {
