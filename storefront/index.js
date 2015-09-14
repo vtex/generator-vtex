@@ -36,7 +36,6 @@ module.exports = galleryAppGenetaror.extend({
         }];
 
         this.prompt(prompts, function (props) {
-          self.meta = { storefront: true };
           self.webpack = props.webpack;
 
           if (self.webpack) {

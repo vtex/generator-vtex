@@ -47,7 +47,6 @@ module.exports = yeoman.generators.Base.extend({
     this.prompt(prompts, function (props) {
       this.name = props.name;
       this.vendor = props.vendor;
-      this.meta = {};
 
       done();
     }.bind(this));
@@ -63,8 +62,7 @@ module.exports = yeoman.generators.Base.extend({
       this.destinationPath('meta.json'),
       {
         name: this.name,
-        vendor: this.vendor,
-        meta: this.meta
+        vendor: this.vendor
       }
     );
     this.fs.copyTpl(
