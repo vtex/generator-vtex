@@ -198,8 +198,8 @@ module.exports = galleryAppGenetaror.extend({
   },
 
   install: function () {
-    if (this.webpack) {
-      this.installDependencies({ skipInstall: !this.installNodeDependencies });
+    if (this.webpack && this.installNodeDependencies) {
+      this.installDependencies({ bower: false });
     }
   }
 });
