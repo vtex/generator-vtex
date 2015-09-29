@@ -110,8 +110,8 @@ module.exports = yeoman.generators.Base.extend({
 
   _copyEditorComponent: function() {
     this.fs.copyTpl(
-      this.templatePath('components/Component.jsx'),
-      this.destinationPath('src/editors/' + this.componentName + '.jsx'),
+      this.templatePath('components/Component.js'),
+      this.destinationPath('src/editors/' + this.componentName + '.js'),
       {
         componentName: this.componentName
       }
@@ -120,8 +120,8 @@ module.exports = yeoman.generators.Base.extend({
 
   _copyUtilsComponent: function() {
     this.fs.copyTpl(
-      this.templatePath('components/Component.jsx'),
-      this.destinationPath('src/utils/' + this.componentName + '.jsx'),
+      this.templatePath('components/Component.js'),
+      this.destinationPath('src/utils/' + this.componentName + '.js'),
       {
         componentName: this.componentName
       }
