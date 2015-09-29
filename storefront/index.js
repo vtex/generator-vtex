@@ -3,6 +3,7 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var vtexsay = require('vtexsay');
+var mkdirp = require('mkdirp');
 
 var galleryAppGenetaror = require('../app/');
 
@@ -57,12 +58,16 @@ module.exports = galleryAppGenetaror.extend({
     }
   },
 
-  _createStorefrontDirectories: function() {
-    this.mkdir('storefront');
+  _createDirectoryCallback: function(err) {
+    if (err) {
+      this.log(err);
+    }
+  },
 
-    this.mkdir('storefront/assets');
-    this.mkdir('storefront/resources');
-    this.mkdir('storefront/components');
+  _createStorefrontDirectories: function() {
+    mkdirp('storefront/assets', this._createDirectoryCallback.bind(this));
+    mkdirp('storefront/resources', this._createDirectoryCallback.bind(this));
+    mkdirp('storefront/components', this._createDirectoryCallback.bind(this));
   },
 
   _copyStorefrontBasic: function() {
@@ -127,13 +132,11 @@ module.exports = galleryAppGenetaror.extend({
   },
 
   _createSourceDirectories: function() {
-    this.mkdir('src/');
-
-    this.mkdir('src/assets');
-    this.mkdir('src/components');
-    this.mkdir('src/editors');
-    this.mkdir('src/pages');
-    this.mkdir('src/utils');
+    mkdirp('src/assets', this._createDirectoryCallback.bind(this));
+    mkdirp('src/components', this._createDirectoryCallback.bind(this));
+    mkdirp('src/editors', this._createDirectoryCallback.bind(this));
+    mkdirp('src/pages', this._createDirectoryCallback.bind(this));
+    mkdirp('src/utils', this._createDirectoryCallback.bind(this));
   },
 
   _copySourceExampleFiles: function() {

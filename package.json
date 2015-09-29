@@ -23,6 +23,7 @@
   "dependencies": {
     "ast-query": "^1.0.1",
     "chalk": "^1.0.0",
+    "mkdirp": "^0.5.1",
     "vtexsay": "^1.0.3",
     "yeoman-generator": "^0.20.3"
   },
