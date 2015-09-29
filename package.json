@@ -24,7 +24,7 @@
     "ast-query": "^1.0.1",
     "chalk": "^1.0.0",
     "vtexsay": "^1.0.3",
-    "yeoman-generator": "^0.18.9"
+    "yeoman-generator": "^0.20.3"
   },
   "devDependencies": {
     "mocha": "*"
