@@ -34,9 +34,6 @@
     "webpack": "^1.12.2",
     "webpack-hot-middleware": "^2.0.0"
   },
-  "eslintConfig": {
-    "extends": "vtex"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "vtex watch",
