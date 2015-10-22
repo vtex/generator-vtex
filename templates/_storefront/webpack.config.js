@@ -13,39 +13,77 @@ var svgoConfig = JSON.stringify({
   ]
 });
 
-var hotEntryPoints = {
-  'HomePage':
-    [
-      'webpack-dev-server/client?http://127.0.0.1:3000',
-      'webpack/hot/only-dev-server',
-      './src/pages/HomePage/index.js'
+var config = {
+  entry: {
+    'HomePage': ['./src/pages/HomePage/index.js'],
+    'editors/index': ['./src/editors/index.js']
+  },
+
+  module: {
+    preLoaders: [
+      {
+        test: /\.js$/,
+        include: path.join(__dirname, 'src'),
+        exclude: /node_modules/,
+        loader: 'eslint-loader'
+      }
     ],
-  'editors/index':
-    [
-      'webpack/hot/only-dev-server',
-      './src/editors/index.js'
+
+    loaders: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        include: path.join(__dirname, 'src'),
+        loader: 'babel',
+        query: {
+          stage: 0,
+          plugins: []
+        }
+      }, {
+        test: /\.less$/,
+        loader: 'style-loader!css-loader!less-loader'
+      }, {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader'
+      }, {
+        test: /\.svg$/,
+        loaders: ['raw-loader', 'svgo-loader?' + JSON.stringify({
+          plugins: [
+            {removeTitle: true},
+            {convertColors: {shorthex: false}},
+            {convertPathData: false}
+          ]
+        })]
+      }, {
+        test: /\.(png|jpg|woff|ttf|eot|woff2)$/,
+        loader: 'url-loader?limit=100000'
+      }, {
+        test: /\.jpg$/,
+        loader: 'file-loader'
+      }
     ]
-};
+  },
 
-var coldEntryPoints = {
-  'HomePage': './src/pages/HomePage/index.js',
-  'editors/index': './src/editors/index.js'
-};
-
-module.exports = {
-  devtool: 'sourcemap',
-
-  watch: production ? false : true,
-
-  entry: hot ? hotEntryPoints : coldEntryPoints,
+  plugins: production ? [
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.UglifyJsPlugin({compressor: {warnings: false}}),
+    new webpack.optimize.AggressiveMergingPlugin(),
+    new webpack.optimize.CommonsChunkPlugin('common.js')
+  ] : [
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.CommonsChunkPlugin('common.js')
+  ],
 
   externals: {
-    'sdk': 'storefront.sdk',
+    'alt': 'alt',
+    'axios': 'axios',
+    'immutable': 'Immutable',
+    'intl': 'Intl',
     'react': 'React',
+    'react-dom': 'ReactDOM',
+    'react-intl': 'ReactIntl',
     'react-router': 'ReactRouter',
-    'lodash': 'lodash',
-    intl: 'Intl',
-    'react-intl': 'ReactIntl'
+    'sdk': 'storefront.sdk'
   },
 
   resolve: {
@@ -65,81 +103,45 @@ module.exports = {
     filename: '[name].js',
     chunkFilename: '[name].js',
     jsonpFunction: 'webpackJsonp_' + meta.vendor.replace(/\-/g, '') + '_' + meta.name.replace(/\-/g, ''),
-    devtoolModuleFilenameTemplate: 'webpack:///' + pkg.name + '/[resource]?[hash][id]'
+    devtoolModuleFilenameTemplate: 'webpack:///' + pkg.name + '/[resource]'
   },
 
   eslint: {
     configFile: '.eslintrc'
   },
 
-  module: {
-    preLoaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'eslint-loader'
-      }
-    ],
+  devtool: 'source-map',
 
-    loaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loaders: hot ? ['react-hot', 'babel-loader?stage=0'] : ['babel-loader?stage=0']
-      }, {
-        test: /\.less$/,
-        loader: 'style-loader!css-loader!less-loader'
-      }, {
-        test: /\.css$/,
-        loader: 'style-loader!css-loader'
-      }, {
-        test: /\.svg$/,
-        loaders: ['raw-loader', 'svgo-loader?' + svgoConfig]
-      }, {
-        test: /\.(png|jpg|woff|ttf|eot|woff2)$/,
-        loader: 'url-loader?limit=100000'
-      }, {
-        test: /\.jpg$/,
-        loader: 'file-loader'
-      }
-    ]
-  },
+  watch: production ? false : true,
 
-  plugins: production ? [
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.AggressiveMergingPlugin(),
-    new webpack.optimize.CommonsChunkPlugin('common.js')
-  ] : hot ? [
-    new webpack.NoErrorsPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.optimize.CommonsChunkPlugin('common.js')
-  ] : [
-    new webpack.optimize.CommonsChunkPlugin('common.js')
-  ],
+  quiet: true,
 
-  quiet: false,
+  noInfo: true,
 
-  noInfo: false,
-
-  devServer: {
-    publicPath: publicPath,
-    port: 3000,
-    hot: true,
-    inline: true,
-    stats: {
-      assets: false,
-      colors: true,
-      version: true,
-      hash: false,
-      timings: true,
-      chunks: true,
-      chunkModules: false
-    },
-    historyApiFallback: true,
-    proxy: {
-      '*': 'http://janus-edge.vtex.com.br/'
-    }
+  proxy: {
+    '*': 'http://janus-edge.vtex.com.br/'
   }
 };
+
+if (process.env.HOT) {
+  config.devtool = 'source-map';
+  config.entry['editors/index'].unshift('webpack-hot-middleware/client');
+  config.plugins.unshift(new webpack.NoErrorsPlugin());
+  config.plugins.unshift(new webpack.HotModuleReplacementPlugin());
+
+  config.module.loaders[0].query.plugins.push('react-transform');
+  config.module.loaders[0].query.extra = {
+    'react-transform': {
+      transforms: [{
+        transform: 'react-transform-hmr',
+        imports: ['react'],
+        locals: ['module']
+      }, {
+        transform: 'react-transform-catch-errors',
+        imports: ['react', 'redbox-react', 'utils/reporterOptions']
+      }]
+    }
+  };
+}
+
+module.exports = config;
