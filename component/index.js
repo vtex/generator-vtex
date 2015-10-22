@@ -3,6 +3,7 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var vtexsay = require('vtexsay');
+var fs = require('fs');
 
 var updateWebpackConfig = require('../utils/updateWebpackConfig');
 var galleryAppGenetaror = require('../app/');
@@ -14,7 +15,7 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   initializing: function () {
-    this.meta = JSON.parse(this.readFileAsString('meta.json'));
+    this.meta = JSON.parse(fs.readFileSync('meta.json', 'utf8'));
     this.pkg = require('../package.json');
   },
 
@@ -142,7 +143,7 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   _updateWebpackConfig: function() {
-    var source = this.readFileAsString('webpack.config.js');
+    var source = fs.readFileSync('webpack.config.js', 'utf8');
     var newSource = updateWebpackConfig(source, this);
     this.write('webpack.config.js', newSource);
   },
