@@ -32,7 +32,7 @@ module.exports = galleryAppGenetaror.extend({
         var prompts = [{
           type: 'confirm',
           name: 'webpack',
-          message: 'Would you like to use the standard dev structure (ES6/7 + LESS + Webpack + eslint)?',
+          message: 'Would you like to use the standard dev structure (ES6/7 + LESS + Webpack)?',
           default: true
         }];
 
@@ -117,13 +117,6 @@ module.exports = galleryAppGenetaror.extend({
     );
   },
 
-  _copyEsLintRC: function() {
-    this.fs.copy(
-      this.templatePath('_storefront/eslintrc'),
-      this.destinationPath('.eslintrc')
-    );
-  },
-
   _copyWebpackConfig: function() {
     this.fs.copy(
       this.templatePath('_storefront/webpack.config.js'),
@@ -190,7 +183,6 @@ module.exports = galleryAppGenetaror.extend({
         this._copySourceExampleFiles();
         this._copyPackageJSON();
         this._copyWebpackConfig();
-        this._copyEsLintRC();
       } else {
         this._copyStorefrontBasic();
       }
