@@ -138,7 +138,7 @@ if (process.env.HOT) {
         locals: ['module']
       }, {
         transform: 'react-transform-catch-errors',
-        imports: ['react', 'redbox-react', 'utils/reporterOptions']
+        imports: ['react', 'redbox-react']
       }]
     }
   };
