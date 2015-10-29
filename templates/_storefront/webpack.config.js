@@ -4,14 +4,6 @@ var pkg = require('./package.json');
 var meta = require('./meta.json');
 var publicPath = '/assets/@' + meta.vendor + '.' + pkg.name + '/';
 var production = process.env.NODE_ENV === 'production';
-var hot = process.env.NODE_ENV === 'hot';
-var svgoConfig = JSON.stringify({
-  plugins: [
-    {removeTitle: true},
-    {convertColors: {shorthex: false}},
-    {convertPathData: false}
-  ]
-});
 
 var config = {
   entry: {
