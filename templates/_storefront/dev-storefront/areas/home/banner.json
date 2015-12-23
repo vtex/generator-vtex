@@ -1,0 +1,3 @@
+{
+  "component": "Banner@<%= vendor %>.<%= name %>"
+}

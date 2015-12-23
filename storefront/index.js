@@ -119,15 +119,15 @@ module.exports = galleryAppGenetaror.extend({
 
   _copyEsLintRC: function() {
     this.fs.copy(
-      this.templatePath('_storefront/eslintrc'),
+      this.templatePath('_storefront/_eslintrc'),
       this.destinationPath('.eslintrc')
     );
   },
 
   _copyWebpackConfig: function() {
     this.fs.copy(
-      this.templatePath('_storefront/webpack.config.js'),
-      this.destinationPath('webpack.config.js')
+      this.templatePath('_storefront/webpack.config.babel.js'),
+      this.destinationPath('webpack.config.babel.js')
     );
   },
 

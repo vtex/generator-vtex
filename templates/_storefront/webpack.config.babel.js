@@ -1,15 +1,45 @@
-var webpack = require('webpack');
-var path = require('path');
-var pkg = require('./package.json');
-var meta = require('./meta.json');
-var publicPath = '/assets/@' + meta.vendor + '.' + pkg.name + '/';
-var production = process.env.NODE_ENV === 'production';
+'use strict';
 
-var config = {
-  entry: {
-    'HomePage': ['./src/pages/HomePage/index.js'],
-    'editors/index': ['./src/editors/index.js']
-  },
+import webpack from 'webpack';
+import fs from 'fs';
+import path from 'path';
+import meta from './meta.json';
+
+const publicPath = '/assets/@vtex.' + meta.name + '/';
+const production = process.env.NODE_ENV === 'production';
+
+// Generate an entry point for each component in 'src/components/'
+const publicComponents = fs.readdirSync('src/components');
+let entryPoints = publicComponents.reduce((entryPoints, entryPoint) => {
+  return {
+    ...entryPoints,
+    [entryPoint]: [`./src/components/${entryPoint}/index.js`]
+  };
+}, entryPoints);
+
+// Create a commons.js for the public components
+const commonsPublicOptions = {
+  name: 'commons',
+  chunks: publicComponents
+};
+
+// Generate an entry point for each editor component
+const editorComponents = fs.readdirSync('src/editors');
+entryPoints = editorComponents.reduce((entryPoints, entryPoint) => {
+  return {
+    ...entryPoints,
+    [`editors/${entryPoint}`]: [`./src/editors/${entryPoint}/index.js`]
+  };
+}, entryPoints);
+
+// Create a commons.js for the public components
+const commonsEditorOptions = {
+  name: 'editors/commons',
+  chunks: editorComponents
+};
+
+let config = {
+  entry: entryPoints,
 
   module: {
     preLoaders: [
@@ -33,10 +63,13 @@ var config = {
         }
       }, {
         test: /\.less$/,
-        loader: 'style-loader!css-loader!less-loader'
+        loaders: ['style', 'css', 'autoprefixer?browsers=last 2 version', 'less']
+      }, {
+        test: /\.scss$/,
+        loaders: ['style', 'css', 'autoprefixer?browsers=last 2 version', 'sass']
       }, {
         test: /\.css$/,
-        loader: 'style-loader!css-loader'
+        loader: ['style', 'css']
       }, {
         test: /\.svg$/,
         loaders: ['raw-loader', 'svgo-loader?' + JSON.stringify({
@@ -47,10 +80,10 @@ var config = {
           ]
         })]
       }, {
-        test: /\.(png|jpg|woff|ttf|eot|woff2)$/,
+        test: /\.(woff|ttf|eot|woff2)$/,
         loader: 'url-loader?limit=100000'
       }, {
-        test: /\.jpg$/,
+        test: /\.(jpg|gif)$/,
         loader: 'file-loader'
       }
     ]
@@ -60,10 +93,12 @@ var config = {
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({compressor: {warnings: false}}),
     new webpack.optimize.AggressiveMergingPlugin(),
-    new webpack.optimize.CommonsChunkPlugin('common.js')
+    new webpack.optimize.CommonsChunkPlugin(commonsPublicOptions),
+    new webpack.optimize.CommonsChunkPlugin(commonsEditorOptions)
   ] : [
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.CommonsChunkPlugin('common.js')
+    new webpack.optimize.CommonsChunkPlugin(commonsPublicOptions),
+    new webpack.optimize.CommonsChunkPlugin(commonsEditorOptions)
   ],
 
   externals: {
@@ -75,16 +110,17 @@ var config = {
     'react-dom': 'ReactDOM',
     'react-intl': 'ReactIntl',
     'react-router': 'ReactRouter',
-    'sdk': 'storefront.sdk'
+    'sdk': 'storefront.sdk',
+    'vtex-editor': 'vtex.editor'
   },
 
   resolve: {
     extensions: ['', '.js'],
     alias: {
       'assets': path.join(__dirname, '/src/assets'),
-      'components': path.join(__dirname, '/src/components'),
       'editors': path.join(__dirname, '/src/editors'),
-      'pages': path.join(__dirname, '/src/pages'),
+      'components': path.join(__dirname, '/src/components'),
+      'commons': path.join(__dirname, '/src/commons'),
       'utils': path.join(__dirname, '/src/utils')
     }
   },
@@ -95,7 +131,7 @@ var config = {
     filename: '[name].js',
     chunkFilename: '[name].js',
     jsonpFunction: 'webpackJsonp_' + meta.vendor.replace(/\-/g, '') + '_' + meta.name.replace(/\-/g, ''),
-    devtoolModuleFilenameTemplate: 'webpack:///' + pkg.name + '/[resource]'
+    devtoolModuleFilenameTemplate: 'webpack:///' + meta.name + '/[resource]'
   },
 
   eslint: {
@@ -117,7 +153,9 @@ var config = {
 
 if (process.env.HOT) {
   config.devtool = 'source-map';
-  config.entry['editors/index'].unshift('webpack-hot-middleware/client');
+  for (let entryName in config.entry) {
+    config.entry[entryName].unshift('webpack-hot-middleware/client');
+  }
   config.plugins.unshift(new webpack.NoErrorsPlugin());
   config.plugins.unshift(new webpack.HotModuleReplacementPlugin());
 

@@ -1,0 +1,3 @@
+{
+  "component": "HomePage@<%= vendor %>.<%= name %>"
+}

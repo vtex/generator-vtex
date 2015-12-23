@@ -1,6 +1,6 @@
 {
   "assets": [
     "common.js",
-    "<%= componentName %>.js"
+    "Banner.js"
   ]
 }
