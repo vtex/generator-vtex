@@ -24,7 +24,7 @@ function updateEntryPoints(ast, context) {
           elements: [
             {
               type: 'Literal',
-              value: './src/pages/' + context.componentName + '/index.js'
+              value: './src/components/' + context.componentName + '/index.js'
             },
           ]
         }
