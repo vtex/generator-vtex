@@ -7,7 +7,7 @@ var production = process.env.NODE_ENV === 'production';
 
 var config = {
   entry: {
-    'HomePage': ['./src/pages/HomePage/index.js'],
+    'HomePage': ['./src/components/HomePage/index.js'],
     'editors/index': ['./src/editors/index.js']
   },
 

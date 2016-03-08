@@ -67,6 +67,9 @@ module.exports = galleryAppGenetaror.extend({
   _createStorefrontDirectories: function() {
     mkdirp('storefront/assets', this._createDirectoryCallback.bind(this));
     mkdirp('storefront/resources', this._createDirectoryCallback.bind(this));
+    mkdirp('storefront/settings/components', this._createDirectoryCallback.bind(this));
+    mkdirp('storefront/settings/routes', this._createDirectoryCallback.bind(this));
+    mkdirp('storefront/routes', this._createDirectoryCallback.bind(this));
     mkdirp('storefront/components', this._createDirectoryCallback.bind(this));
   },
 
@@ -84,13 +87,28 @@ module.exports = galleryAppGenetaror.extend({
   _copyStorefrontDev: function() {
     var options = {
       name: this.name,
-      vendor: this.vendor
+      vendor: this.vendor,
+      componentName: "HomePage@" + this.vendor + "." + this.name
     };
 
     this.fs.copyTpl(
       this.templatePath('_storefront/dev-storefront/components/HomePage.json'),
       this.destinationPath('storefront/components/HomePage.json'),
       options
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('_storefront/dev-storefront/routes/home.json'),
+      this.destinationPath('storefront/routes/home.json'),
+      options
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('_storefront/dev-storefront/components/Root.json'),
+      this.destinationPath('storefront/settings/routes/home/Root@storefront-sdk/content.json'),
+      {
+        componentName: options.componentName
+      }
     );
   },
 
@@ -135,7 +153,6 @@ module.exports = galleryAppGenetaror.extend({
     mkdirp('src/assets', this._createDirectoryCallback.bind(this));
     mkdirp('src/components', this._createDirectoryCallback.bind(this));
     mkdirp('src/editors', this._createDirectoryCallback.bind(this));
-    mkdirp('src/pages', this._createDirectoryCallback.bind(this));
     mkdirp('src/utils', this._createDirectoryCallback.bind(this));
   },
 
@@ -153,19 +170,25 @@ module.exports = galleryAppGenetaror.extend({
 
     this.fs.copyTpl(
       this.templatePath('_storefront/src/pages/HomePage/HomePage.js'),
-      this.destinationPath('src/pages/HomePage/HomePage.js'),
+      this.destinationPath('src/components/HomePage/HomePage.js'),
       options
     );
 
     this.fs.copyTpl(
       this.templatePath('_storefront/src/pages/HomePage/HomePage.less'),
-      this.destinationPath('src/pages/HomePage/HomePage.less'),
+      this.destinationPath('src/components/HomePage/HomePage.less'),
       options
     );
 
     this.fs.copyTpl(
       this.templatePath('_storefront/src/pages/HomePage/index.js'),
-      this.destinationPath('src/pages/HomePage/index.js'),
+      this.destinationPath('src/components/HomePage/index.js'),
+      options
+    );
+
+   this.fs.copyTpl(
+      this.templatePath('_storefront/src/pages/HomePage/index.js'),
+      this.destinationPath('src/components/HomePage/index.js'),
       options
     );
 

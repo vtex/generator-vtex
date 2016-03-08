@@ -92,7 +92,7 @@ module.exports = yeoman.generators.Base.extend({
   _copyPageComponent: function() {
     this.fs.copyTpl(
       this.templatePath('components/Component.js'),
-      this.destinationPath('src/pages/' + this.componentName + '/' + this.componentName + '.js'),
+      this.destinationPath('src/components/' + this.componentName + '/' + this.componentName + '.js'),
       {
         componentName: this.componentName
       }
@@ -100,11 +100,21 @@ module.exports = yeoman.generators.Base.extend({
 
     this.fs.copyTpl(
       this.templatePath('components/index.js'),
-      this.destinationPath('src/pages/' + this.componentName + '/index.js'),
+      this.destinationPath('src/components/' + this.componentName + '/index.js'),
       {
         componentName: this.componentName,
         vendor: this.meta.vendor,
         name: this.meta.name
+      }
+    );
+  },
+
+  _copyRootComponent: function() {
+    this.fs.copyTpl(
+      this.templatePath('_storefront/dev-storefront/components/Root.json'),
+      this.destinationPath('storefront/settings/routes/' + this.routeName + '/Root@vtex.storefront-sdk/content.json'),
+      {
+        componentName: this.componentName + "@" + this.meta.vendor + "." + this.meta.name,
       }
     );
   },
@@ -156,6 +166,7 @@ module.exports = yeoman.generators.Base.extend({
           break;
         case 'Page':
           this._copyPageComponent();
+          this._copyRootComponent();
           this._copyComponentDefinition();
           this._updateWebpackConfig();
           break;
