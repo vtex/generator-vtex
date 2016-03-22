@@ -69,6 +69,10 @@ module.exports = yeoman.generators.Base.extend({
       this.templatePath('_vtexignore'),
       this.destinationPath('.vtexignore')
     );
+    this.fs.copyTpl(
+      this.templatePath('_storefront/src/utils/reporterOptions.js'),
+      this.destinationPath('src/utils/reporterOptions.js')
+    );
   },
 
   writing: function() {
