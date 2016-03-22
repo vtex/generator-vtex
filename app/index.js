@@ -58,8 +58,8 @@ module.exports = yeoman.generators.Base.extend({
 
   _copyBasic: function() {
     this.fs.copyTpl(
-      this.templatePath('_meta.json'),
-      this.destinationPath('meta.json'),
+      this.templatePath('_manifest.json'),
+      this.destinationPath('manifest.json'),
       {
         name: this.name,
         vendor: this.vendor

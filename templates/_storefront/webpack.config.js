@@ -1,8 +1,8 @@
 var webpack = require('webpack');
 var path = require('path');
 var pkg = require('./package.json');
-var meta = require('./meta.json');
-var publicPath = '/assets/@' + meta.vendor + '.' + pkg.name + '/';
+var manifest = require('./manifest.json');
+var publicPath = '/assets/@' + manifest.vendor + '.' + pkg.name + '/';
 var production = process.env.NODE_ENV === 'production';
 
 var config = {
@@ -94,7 +94,7 @@ var config = {
     publicPath: publicPath,
     filename: '[name].js',
     chunkFilename: '[name].js',
-    jsonpFunction: 'webpackJsonp_' + meta.vendor.replace(/\-/g, '') + '_' + meta.name.replace(/\-/g, ''),
+    jsonpFunction: 'webpackJsonp_' + manifest.vendor.replace(/\-/g, '') + '_' + manifest.name.replace(/\-/g, ''),
     devtoolModuleFilenameTemplate: 'webpack:///' + pkg.name + '/[resource]'
   },
 

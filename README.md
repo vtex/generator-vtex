@@ -9,7 +9,7 @@ npm install -g generator-vtex
 
 ### Generic app
 
-This will only create a `meta.json` and `.vtexignore` file.
+This will only create a `manifest.json` and `.vtexignore` file.
 
 ```bash
 yo vtex

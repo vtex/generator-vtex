@@ -15,7 +15,7 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   initializing: function () {
-    this.meta = JSON.parse(fs.readFileSync('meta.json', 'utf8'));
+    this.manifest = JSON.parse(fs.readFileSync('manifest.json', 'utf8'));
     this.pkg = require('../package.json');
   },
 
@@ -103,8 +103,8 @@ module.exports = yeoman.generators.Base.extend({
       this.destinationPath('src/components/' + this.componentName + '/index.js'),
       {
         componentName: this.componentName,
-        vendor: this.meta.vendor,
-        name: this.meta.name
+        vendor: this.manifest.vendor,
+        name: this.manifest.name
       }
     );
   },
@@ -114,7 +114,7 @@ module.exports = yeoman.generators.Base.extend({
       this.templatePath('_storefront/dev-storefront/components/Root.json'),
       this.destinationPath('storefront/settings/routes/' + this.routeName + '/Root@vtex.storefront-sdk/content.json'),
       {
-        componentName: this.componentName + "@" + this.meta.vendor + "." + this.meta.name,
+        componentName: this.componentName + "@" + this.manifest.vendor + "." + this.manifest.name,
       }
     );
   },
