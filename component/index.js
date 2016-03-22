@@ -109,6 +109,16 @@ module.exports = yeoman.generators.Base.extend({
     );
   },
 
+  _copyPageRoute: function() {
+    this.fs.copyTpl(
+      this.templatePath('_storefront/dev-storefront/routes/path.json'),
+      this.destinationPath('storefront/routes/' + this.routeName + '.json'),
+      {
+        routePath: this.routePath
+      }
+    );
+  },
+
   _copyRootComponent: function() {
     this.fs.copyTpl(
       this.templatePath('_storefront/dev-storefront/components/Root.json'),
@@ -166,6 +176,7 @@ module.exports = yeoman.generators.Base.extend({
           break;
         case 'Page':
           this._copyPageComponent();
+          this._copyPageRoute();
           this._copyRootComponent();
           this._copyComponentDefinition();
           this._updateWebpackConfig();
