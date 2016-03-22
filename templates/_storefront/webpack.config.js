@@ -117,7 +117,9 @@ var config = {
 
 if (process.env.HOT) {
   config.devtool = 'source-map';
-  config.entry['editors/index'].unshift('webpack-hot-middleware/client');
+  for (entryName in config.entry) {
+    config.entry[entryName].unshift('webpack-hot-middleware/client');
+  }
   config.plugins.unshift(new webpack.NoErrorsPlugin());
   config.plugins.unshift(new webpack.HotModuleReplacementPlugin());
 
@@ -130,7 +132,7 @@ if (process.env.HOT) {
         locals: ['module']
       }, {
         transform: 'react-transform-catch-errors',
-        imports: ['react', 'redbox-react']
+        imports: ['react', 'redbox-react', 'utils/reporterOptions']
       }]
     }
   };
