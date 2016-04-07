@@ -5,7 +5,6 @@ var chalk = require('chalk');
 var vtexsay = require('vtexsay');
 var fs = require('fs');
 
-var updateWebpackConfig = require('../utils/updateWebpackConfig');
 var galleryAppGenetaror = require('../app/');
 
 module.exports = yeoman.generators.Base.extend({
@@ -132,23 +131,6 @@ module.exports = yeoman.generators.Base.extend({
     );
   },
 
-  _updateWebpackConfig: function(config) {
-    var context = {};
-    if (config.isEditor) {
-      Object.getOwnPropertyNames(this).forEach(function(prop) {
-        context[prop] = this[prop];
-      }, this);
-
-      context.isEditor = true;
-    } else {
-      context = this;
-    }
-
-    var source = fs.readFileSync('webpack.config.js', 'utf8');
-    var newSource = updateWebpackConfig(source, context);
-    this.write('webpack.config.js', newSource);
-  },
-
   writing: {
     method1: function() {
       switch (this.componentType) {
@@ -161,7 +143,6 @@ module.exports = yeoman.generators.Base.extend({
           this._copyPageRoute();
           this._copyRootComponent();
           this._copyComponentDefinition();
-          this._updateWebpackConfig(this);
           break;
       }
     }
