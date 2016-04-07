@@ -169,25 +169,25 @@ module.exports = galleryAppGenetaror.extend({
     );
 
     this.fs.copyTpl(
-      this.templatePath('_storefront/src/pages/HomePage/HomePage.js'),
+      this.templatePath('_storefront/src/components/HomePage/HomePage.js'),
       this.destinationPath('src/components/HomePage/HomePage.js'),
       options
     );
 
     this.fs.copyTpl(
-      this.templatePath('_storefront/src/pages/HomePage/HomePage.less'),
+      this.templatePath('_storefront/src/components/HomePage/HomePage.less'),
       this.destinationPath('src/components/HomePage/HomePage.less'),
       options
     );
 
     this.fs.copyTpl(
-      this.templatePath('_storefront/src/pages/HomePage/index.js'),
+      this.templatePath('_storefront/src/components/HomePage/index.js'),
       this.destinationPath('src/components/HomePage/index.js'),
       options
     );
 
    this.fs.copyTpl(
-      this.templatePath('_storefront/src/pages/HomePage/index.js'),
+      this.templatePath('_storefront/src/components/HomePage/index.js'),
       this.destinationPath('src/components/HomePage/index.js'),
       options
     );
