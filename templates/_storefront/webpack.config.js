@@ -1,14 +1,28 @@
-var webpack = require('webpack');
-var path = require('path');
-var pkg = require('./package.json');
-var manifest = require('./manifest.json');
-var publicPath = '/assets/@' + manifest.vendor + '.' + pkg.name + '/';
-var production = process.env.NODE_ENV === 'production';
+'use strict';
 
-var config = {
-  entry: {
-    'HomePage': ['./src/components/HomePage/index.js']
-  },
+const webpack = require('webpack');
+const fs = require('fs');
+const path = require('path');
+const manifest = require('./manifest.json');
+
+const publicPath = '/assets/@vtex.' + manifest.name + '/';
+const production = process.env.NODE_ENV === 'production';
+
+// Generate an entry point for each component in 'src/components/'
+const publicComponents = fs.readdirSync('src/components');
+const entryPoints = publicComponents.reduce((entryPoints, entryPoint) => {
+  entryPoints[entryPoint] = [`./src/components/${entryPoint}/index.js`];
+  return entryPoints;
+}, {});
+
+// Create a common.js for the public components
+const commonsPublicOptions = {
+  name: 'common',
+  chunks: publicComponents
+};
+
+let config = {
+  entry: entryPoints,
 
   module: {
     preLoaders: [
@@ -32,10 +46,13 @@ var config = {
         }
       }, {
         test: /\.less$/,
-        loader: 'style-loader!css-loader!less-loader'
+        loaders: ['style', 'css', 'autoprefixer?browsers=last 2 version', 'less']
+      }, {
+        test: /\.scss$/,
+        loaders: ['style', 'css', 'autoprefixer?browsers=last 2 version', 'sass']
       }, {
         test: /\.css$/,
-        loader: 'style-loader!css-loader'
+        loader: ['style', 'css']
       }, {
         test: /\.svg$/,
         loaders: ['raw-loader', 'svgo-loader?' + JSON.stringify({
@@ -46,10 +63,10 @@ var config = {
           ]
         })]
       }, {
-        test: /\.(png|jpg|woff|ttf|eot|woff2)$/,
+        test: /\.(woff|ttf|eot|woff2)$/,
         loader: 'url-loader?limit=100000'
       }, {
-        test: /\.jpg$/,
+        test: /\.(jpg|gif)$/,
         loader: 'file-loader'
       }
     ]
@@ -59,10 +76,10 @@ var config = {
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({compressor: {warnings: false}}),
     new webpack.optimize.AggressiveMergingPlugin(),
-    new webpack.optimize.CommonsChunkPlugin('common.js')
+    new webpack.optimize.CommonsChunkPlugin(commonsPublicOptions),
   ] : [
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.CommonsChunkPlugin('common.js')
+    new webpack.optimize.CommonsChunkPlugin(commonsPublicOptions),
   ],
 
   externals: {
@@ -73,8 +90,8 @@ var config = {
     'react': 'React',
     'react-dom': 'ReactDOM',
     'react-intl': 'ReactIntl',
-    'react-router': 'ReactRouter',
-    'sdk': 'storefront.sdk'
+    'sdk': 'storefront.sdk',
+    'vtex-editor': 'vtex.editor'
   },
 
   resolve: {
@@ -82,8 +99,7 @@ var config = {
     alias: {
       'assets': path.join(__dirname, '/src/assets'),
       'components': path.join(__dirname, '/src/components'),
-      'editors': path.join(__dirname, '/src/editors'),
-      'pages': path.join(__dirname, '/src/pages'),
+      'commons': path.join(__dirname, '/src/commons'),
       'utils': path.join(__dirname, '/src/utils')
     }
   },
@@ -94,7 +110,7 @@ var config = {
     filename: '[name].js',
     chunkFilename: '[name].js',
     jsonpFunction: 'webpackJsonp_' + manifest.vendor.replace(/\-/g, '') + '_' + manifest.name.replace(/\-/g, ''),
-    devtoolModuleFilenameTemplate: 'webpack:///' + pkg.name + '/[resource]'
+    devtoolModuleFilenameTemplate: 'webpack:///' + manifest.name + '/[resource]'
   },
 
   eslint: {
@@ -116,7 +132,7 @@ var config = {
 
 if (process.env.HOT) {
   config.devtool = 'source-map';
-  for (entryName in config.entry) {
+  for (let entryName in config.entry) {
     config.entry[entryName].unshift('webpack-hot-middleware/client');
   }
   config.plugins.unshift(new webpack.NoErrorsPlugin());
@@ -131,7 +147,7 @@ if (process.env.HOT) {
         locals: ['module']
       }, {
         transform: 'react-transform-catch-errors',
-        imports: ['react', 'redbox-react', 'utils/reporterOptions']
+        imports: ['react', 'redbox-react']
       }]
     }
   };
