@@ -30,7 +30,7 @@ module.exports = yeoman.generators.Base.extend({
 
       var prompts = [{
         message: 'What type of component do you want to generate?',
-        choices: ['Component', 'Page', 'Editor', 'Utils'],
+        choices: ['Component', 'Page'],
         name: 'componentType',
         type: 'list'
       }, {
@@ -87,16 +87,6 @@ module.exports = yeoman.generators.Base.extend({
         componentName: this.componentName
       }
     );
-  },
-
-  _copyPageComponent: function() {
-    this.fs.copyTpl(
-      this.templatePath('components/Component.js'),
-      this.destinationPath('src/components/' + this.componentName + '/' + this.componentName + '.js'),
-      {
-        componentName: this.componentName
-      }
-    );
 
     this.fs.copyTpl(
       this.templatePath('components/index.js'),
@@ -129,26 +119,6 @@ module.exports = yeoman.generators.Base.extend({
     );
   },
 
-  _copyEditorComponent: function() {
-    this.fs.copyTpl(
-      this.templatePath('components/Component.js'),
-      this.destinationPath('src/editors/' + this.componentName + '.js'),
-      {
-        componentName: this.componentName
-      }
-    );
-  },
-
-  _copyUtilsComponent: function() {
-    this.fs.copyTpl(
-      this.templatePath('components/Component.js'),
-      this.destinationPath('src/utils/' + this.componentName + '.js'),
-      {
-        componentName: this.componentName
-      }
-    );
-  },
-
   _copyComponentDefinition: function() {
     this.fs.copyTpl(
       this.templatePath('components/Component.json'),
@@ -162,9 +132,20 @@ module.exports = yeoman.generators.Base.extend({
     );
   },
 
-  _updateWebpackConfig: function() {
+  _updateWebpackConfig: function(config) {
+    var context = {};
+    if (config.isEditor) {
+      Object.getOwnPropertyNames(this).forEach(function(prop) {
+        context[prop] = this[prop];
+      }, this);
+
+      context.isEditor = true;
+    } else {
+      context = this;
+    }
+
     var source = fs.readFileSync('webpack.config.js', 'utf8');
-    var newSource = updateWebpackConfig(source, this);
+    var newSource = updateWebpackConfig(source, context);
     this.write('webpack.config.js', newSource);
   },
 
@@ -173,19 +154,14 @@ module.exports = yeoman.generators.Base.extend({
       switch (this.componentType) {
         case 'Component':
           this._copyComponent();
+          this._copyComponentDefinition();
           break;
         case 'Page':
-          this._copyPageComponent();
+          this._copyComponent();
           this._copyPageRoute();
           this._copyRootComponent();
           this._copyComponentDefinition();
-          this._updateWebpackConfig();
-          break;
-        case 'Editor':
-          this._copyEditorComponent();
-          break;
-        case 'Utils':
-          this._copyUtilsComponent();
+          this._updateWebpackConfig(this);
           break;
       }
     }

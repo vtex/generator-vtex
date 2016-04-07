@@ -17,14 +17,17 @@ function updateEntryPoints(ast, context) {
         type: 'Property',
         key: {
           type: 'Literal',
-          value: context.componentName
+          value: context.isEditor ?
+            'editors/' + context.componentName : context.componentName
         },
         value: {
           type: 'ArrayExpression',
           elements: [
             {
               type: 'Literal',
-              value: './src/components/' + context.componentName + '/index.js'
+              value: context.isEditor ?
+                './src/editors/' + context.componentName + '/index.js' :
+                './src/components/' + context.componentName + '/index.js'
             },
           ]
         }
