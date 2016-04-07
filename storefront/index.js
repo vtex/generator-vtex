@@ -104,7 +104,7 @@ module.exports = galleryAppGenetaror.extend({
     );
 
     this.fs.copyTpl(
-      this.templatePath('_storefront/dev-storefront/components/Root.json'),
+      this.templatePath('_storefront/dev-storefront/settings/routes/route/Root@vtex.storefront-sdk/content.json'),
       this.destinationPath('storefront/settings/routes/home/Root@vtex.storefront-sdk/content.json'),
       {
         componentName: options.componentName

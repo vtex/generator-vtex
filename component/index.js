@@ -121,7 +121,7 @@ module.exports = yeoman.generators.Base.extend({
 
   _copyRootComponent: function() {
     this.fs.copyTpl(
-      this.templatePath('_storefront/dev-storefront/components/Root.json'),
+      this.templatePath('_storefront/dev-storefront/settings/routes/route/Root@vtex.storefront-sdk/content.json'),
       this.destinationPath('storefront/settings/routes/' + this.routeName + '/Root@vtex.storefront-sdk/content.json'),
       {
         componentName: this.componentName + "@" + this.manifest.vendor + "." + this.manifest.name,
