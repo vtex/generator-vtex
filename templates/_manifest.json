@@ -1,10 +1,11 @@
 {
   "name": "<%= name %>",
   "vendor": "<%= vendor %>",
-  "title": "",
-  "description": "",
+  "title": "My app title",
+  "description": "My app description",
   "version": "0.1.0",
   "dependencies": {
-    "vtex.storefront": "0.x"
+    "vtex.storefront": "0.x",
+    "vtex.storefront-sdk": "0.x"
   }
 }
