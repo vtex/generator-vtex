@@ -159,12 +159,6 @@ module.exports = galleryAppGenetaror.extend({
     };
 
     this.fs.copyTpl(
-      this.templatePath('_storefront/src/components/HelloWorld/HelloWorld.js'),
-      this.destinationPath('src/components/HelloWorld/HelloWorld.js'),
-      options
-    );
-
-    this.fs.copyTpl(
       this.templatePath('_storefront/src/components/HomePage/HomePage.js'),
       this.destinationPath('src/components/HomePage/HomePage.js'),
       options
@@ -182,9 +176,9 @@ module.exports = galleryAppGenetaror.extend({
       options
     );
 
-   this.fs.copyTpl(
-      this.templatePath('_storefront/src/components/HomePage/index.js'),
-      this.destinationPath('src/components/HomePage/index.js'),
+    this.fs.copyTpl(
+      this.templatePath('_storefront/src/components/HomePage/HelloWorld/HelloWorld.js'),
+      this.destinationPath('src/components/HomePage/HelloWorld/HelloWorld.js'),
       options
     );
   },
