@@ -66,8 +66,6 @@ module.exports = galleryAppGenetaror.extend({
 
   _createStorefrontDirectories: function() {
     mkdirp('storefront/assets', this._createDirectoryCallback.bind(this));
-    mkdirp('storefront/resources', this._createDirectoryCallback.bind(this));
-    mkdirp('storefront/settings/components', this._createDirectoryCallback.bind(this));
     mkdirp('storefront/settings/routes', this._createDirectoryCallback.bind(this));
     mkdirp('storefront/routes', this._createDirectoryCallback.bind(this));
     mkdirp('storefront/components', this._createDirectoryCallback.bind(this));
@@ -104,7 +102,7 @@ module.exports = galleryAppGenetaror.extend({
     );
 
     this.fs.copyTpl(
-      this.templatePath('_storefront/dev-storefront/components/Root.json'),
+      this.templatePath('_storefront/dev-storefront/settings/routes/route/Root@vtex.storefront-sdk/content.json'),
       this.destinationPath('storefront/settings/routes/home/Root@vtex.storefront-sdk/content.json'),
       {
         componentName: options.componentName
@@ -150,9 +148,7 @@ module.exports = galleryAppGenetaror.extend({
   },
 
   _createSourceDirectories: function() {
-    mkdirp('src/assets', this._createDirectoryCallback.bind(this));
     mkdirp('src/components', this._createDirectoryCallback.bind(this));
-    mkdirp('src/editors', this._createDirectoryCallback.bind(this));
     mkdirp('src/utils', this._createDirectoryCallback.bind(this));
   },
 
@@ -163,38 +159,26 @@ module.exports = galleryAppGenetaror.extend({
     };
 
     this.fs.copyTpl(
-      this.templatePath('_storefront/src/components/HelloWorld/HelloWorld.js'),
-      this.destinationPath('src/components/HelloWorld/HelloWorld.js'),
-      options
-    );
-
-    this.fs.copyTpl(
-      this.templatePath('_storefront/src/pages/HomePage/HomePage.js'),
+      this.templatePath('_storefront/src/components/HomePage/HomePage.js'),
       this.destinationPath('src/components/HomePage/HomePage.js'),
       options
     );
 
     this.fs.copyTpl(
-      this.templatePath('_storefront/src/pages/HomePage/HomePage.less'),
+      this.templatePath('_storefront/src/components/HomePage/HomePage.less'),
       this.destinationPath('src/components/HomePage/HomePage.less'),
       options
     );
 
     this.fs.copyTpl(
-      this.templatePath('_storefront/src/pages/HomePage/index.js'),
-      this.destinationPath('src/components/HomePage/index.js'),
-      options
-    );
-
-   this.fs.copyTpl(
-      this.templatePath('_storefront/src/pages/HomePage/index.js'),
+      this.templatePath('_storefront/src/components/HomePage/index.js'),
       this.destinationPath('src/components/HomePage/index.js'),
       options
     );
 
     this.fs.copyTpl(
-      this.templatePath('_storefront/src/editors/index.js'),
-      this.destinationPath('src/editors/index.js'),
+      this.templatePath('_storefront/src/components/HomePage/HelloWorld/HelloWorld.js'),
+      this.destinationPath('src/components/HomePage/HelloWorld/HelloWorld.js'),
       options
     );
   },

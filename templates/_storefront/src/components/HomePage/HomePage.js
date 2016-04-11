@@ -1,6 +1,6 @@
 import React from 'react';
 import './HomePage.less';
-import HelloWorld from 'components/HelloWorld/HelloWorld';
+import HelloWorld from './HelloWorld/HelloWorld';
 
 class HomePage extends React.Component {
   render() {

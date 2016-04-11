@@ -5,7 +5,6 @@ var chalk = require('chalk');
 var vtexsay = require('vtexsay');
 var fs = require('fs');
 
-var updateWebpackConfig = require('../utils/updateWebpackConfig');
 var galleryAppGenetaror = require('../app/');
 
 module.exports = yeoman.generators.Base.extend({
@@ -30,7 +29,7 @@ module.exports = yeoman.generators.Base.extend({
 
       var prompts = [{
         message: 'What type of component do you want to generate?',
-        choices: ['Component', 'Page', 'Editor', 'Utils'],
+        choices: ['Component', 'Page'],
         name: 'componentType',
         type: 'list'
       }, {
@@ -87,16 +86,6 @@ module.exports = yeoman.generators.Base.extend({
         componentName: this.componentName
       }
     );
-  },
-
-  _copyPageComponent: function() {
-    this.fs.copyTpl(
-      this.templatePath('components/Component.js'),
-      this.destinationPath('src/components/' + this.componentName + '/' + this.componentName + '.js'),
-      {
-        componentName: this.componentName
-      }
-    );
 
     this.fs.copyTpl(
       this.templatePath('components/index.js'),
@@ -121,30 +110,10 @@ module.exports = yeoman.generators.Base.extend({
 
   _copyRootComponent: function() {
     this.fs.copyTpl(
-      this.templatePath('_storefront/dev-storefront/components/Root.json'),
+      this.templatePath('_storefront/dev-storefront/settings/routes/route/Root@vtex.storefront-sdk/content.json'),
       this.destinationPath('storefront/settings/routes/' + this.routeName + '/Root@vtex.storefront-sdk/content.json'),
       {
         componentName: this.componentName + "@" + this.manifest.vendor + "." + this.manifest.name,
-      }
-    );
-  },
-
-  _copyEditorComponent: function() {
-    this.fs.copyTpl(
-      this.templatePath('components/Component.js'),
-      this.destinationPath('src/editors/' + this.componentName + '.js'),
-      {
-        componentName: this.componentName
-      }
-    );
-  },
-
-  _copyUtilsComponent: function() {
-    this.fs.copyTpl(
-      this.templatePath('components/Component.js'),
-      this.destinationPath('src/utils/' + this.componentName + '.js'),
-      {
-        componentName: this.componentName
       }
     );
   },
@@ -162,30 +131,18 @@ module.exports = yeoman.generators.Base.extend({
     );
   },
 
-  _updateWebpackConfig: function() {
-    var source = fs.readFileSync('webpack.config.js', 'utf8');
-    var newSource = updateWebpackConfig(source, this);
-    this.write('webpack.config.js', newSource);
-  },
-
   writing: {
     method1: function() {
       switch (this.componentType) {
         case 'Component':
           this._copyComponent();
+          this._copyComponentDefinition();
           break;
         case 'Page':
-          this._copyPageComponent();
+          this._copyComponent();
           this._copyPageRoute();
           this._copyRootComponent();
           this._copyComponentDefinition();
-          this._updateWebpackConfig();
-          break;
-        case 'Editor':
-          this._copyEditorComponent();
-          break;
-        case 'Utils':
-          this._copyUtilsComponent();
           break;
       }
     }
