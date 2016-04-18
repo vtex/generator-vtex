@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const manifest = require('./manifest.json');
 
-const publicPath = '/assets/@vtex.' + manifest.name + '/';
+var publicPath = '/assets/'+ manifest.vendor + '/' + manifest.name + '/' + manifest.version + '/';
 const production = process.env.NODE_ENV === 'production';
 
 // Generate an entry point for each component in 'src/components/'
