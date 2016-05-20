@@ -4,9 +4,9 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var vtexsay = require('vtexsay');
 
-module.exports = yeoman.generators.Base.extend({
+module.exports = yeoman.Base.extend({
   constructor: function() {
-    yeoman.generators.Base.apply(this, arguments);
+    yeoman.Base.apply(this, arguments);
     this.sourceRoot(path.join(__dirname, '../templates'));
 
     this.vtexignore = {
@@ -20,8 +20,8 @@ module.exports = yeoman.generators.Base.extend({
 
   _ask: function() {
     var done = this.async();
+    var self = this;
 
-    // Have Yeoman greet the user.
     this.log(vtexsay(
       'Welcome to the tremendous ' + chalk.red('VTEX') + ' generator!'
     ));
@@ -33,9 +33,9 @@ module.exports = yeoman.generators.Base.extend({
       validate: function(input) {
         var done = this.async();
         if (!new RegExp(/^[a-z\-\_]+$/).test(input)) {
-          done("The app name should only contain letters, '-' or '_'.");
+          done(null, "The app name should only contain letters, '-' or '_'.");
         } else {
-          done(true);
+          done(null, true);
         }
       }
     }, {
@@ -44,12 +44,12 @@ module.exports = yeoman.generators.Base.extend({
       message: 'What\'s your VTEX account (vendor)?'
     }];
 
-    this.prompt(prompts, function (props) {
-      this.name = props.name;
-      this.vendor = props.vendor;
+    this.prompt(prompts).then(function(props) {
+      self.name = props.name;
+      self.vendor = props.vendor;
 
       done();
-    }.bind(this));
+    });
   },
 
   prompting: function () {
