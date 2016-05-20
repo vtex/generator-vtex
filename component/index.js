@@ -7,9 +7,9 @@ var fs = require('fs');
 
 var galleryAppGenetaror = require('../app/');
 
-module.exports = yeoman.generators.Base.extend({
+module.exports = yeoman.Base.extend({
   constructor: function() {
-    yeoman.generators.Base.apply(this, arguments);
+    yeoman.Base.apply(this, arguments);
     this.sourceRoot(path.join(__dirname, '../templates'));
   },
 
@@ -39,14 +39,14 @@ module.exports = yeoman.generators.Base.extend({
         validate: function(input) {
           var done = this.async();
           if (!new RegExp(/^[A-z\-\_]+$/).test(input)) {
-            done("The component name should only contain letters, '-' or '_'.");
+            done(null, "The component name should only contain letters, '-' or '_'.");
           } else {
-            done(true);
+            done(null, true);
           }
         }
       }];
 
-      self.prompt(prompts, function(props) {
+      self.prompt(prompts).then(function(props) {
         self.componentType = props.componentType;
         self.componentName = props.componentName;
 
@@ -65,7 +65,7 @@ module.exports = yeoman.generators.Base.extend({
             message: 'What\'s the route\'s path? (eg: /:product/p)',
             type: 'input',
             name: 'routePath'
-          }], function(routeProps) {
+          }]).then(function(routeProps) {
             self.routeName = routeProps.routeName;
             self.routePath = routeProps.routePath;
 
@@ -74,7 +74,7 @@ module.exports = yeoman.generators.Base.extend({
         } else {
           done();
         }
-      }.bind(this));
+      });
     }
   },
 

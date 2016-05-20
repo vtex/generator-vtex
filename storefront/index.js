@@ -36,7 +36,7 @@ module.exports = galleryAppGenetaror.extend({
           default: true
         }];
 
-        this.prompt(prompts, function (props) {
+        this.prompt(prompts).then(function(props) {
           self.webpack = props.webpack;
 
           if (self.webpack) {
@@ -45,10 +45,10 @@ module.exports = galleryAppGenetaror.extend({
               name: 'installNodeDependencies',
               message: 'Install node dependencies?',
               default: true
-            }, function(answer) {
+            }).then(function(answer) {
               self.installNodeDependencies = answer.installNodeDependencies;
               done();
-            })
+            });
           } else {
             self.installNodeDependencies = false;
             done();
